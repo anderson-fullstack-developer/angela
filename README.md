@@ -21,7 +21,7 @@
 
 ## Tech stack
 
-React 19 · TanStack Start · TypeScript · Tailwind CSS · Radix UI · Vitest · designed in Lovable · deployed on Netlify
+React 19 · TanStack Start · TypeScript · Tailwind CSS · Radix UI · Vitest · designed in Lovable · deployed on Vercel
 
 ## Running locally
 
@@ -31,7 +31,7 @@ npm run dev
 npm test
 ```
 
-Deployed on Netlify: build settings live in [`netlify.toml`](netlify.toml) (`NITRO_PRESET=netlify`).
+Deployed on Vercel: build settings live in [`vercel.json`](vercel.json) (`NITRO_PRESET=vercel`). A [`netlify.toml`](netlify.toml) is also included.
 
 ## Author
 

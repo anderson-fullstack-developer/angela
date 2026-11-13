@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://cleandireto.netlify.app/sitemap.xml
+Sitemap: https://cleandireto.vercel.app/sitemap.xml
