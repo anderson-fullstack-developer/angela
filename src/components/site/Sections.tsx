@@ -29,7 +29,7 @@ export function Hero() {
           <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-primary shadow-soft">
             <MapPin className="size-3.5" /> Coimbra e Região Centro
           </span>
-          <h1 className="mt-7 text-4xl font-extrabold leading-[1.05] tracking-tight text-navy sm:text-5xl lg:text-6xl xl:text-7xl text-balance">
+          <h1 className="mt-7 text-4xl font-extrabold leading-[1.05] tracking-tight text-navy sm:text-5xl lg:text-[3.6rem] text-balance">
             Espaços impecáveis, <span className="font-serif font-normal italic text-gradient-brand">com cuidado em cada detalhe.</span>
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
@@ -59,6 +59,31 @@ export function Hero() {
             </span>
           </div>
         </Reveal>
+      </Container>
+    </section>
+  );
+}
+
+/* ---------------- TRUST STRIP ---------------- */
+const TRUST = [
+  { icon: ShieldCheck, title: "Orçamento gratuito", text: "Sem compromisso" },
+  { icon: MessageCircle, title: "Resposta por WhatsApp", text: "Contacto direto e rápido" },
+  { icon: MapPin, title: "Coimbra e Região Centro", text: "Vamos até si" },
+  { icon: Building2, title: "Particulares e empresas", text: "Casas, escritórios e condomínios" },
+];
+export function TrustStrip() {
+  return (
+    <section aria-label="Vantagens" className="border-y border-border bg-card">
+      <Container className="grid grid-cols-2 gap-x-4 gap-y-6 py-8 lg:grid-cols-4 lg:py-10">
+        {TRUST.map((t) => (
+          <div key={t.title} className="flex items-center gap-3">
+            <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-secondary text-primary"><t.icon className="size-5" /></span>
+            <span className="min-w-0">
+              <span className="block text-sm font-extrabold leading-tight text-navy sm:text-base">{t.title}</span>
+              <span className="block text-xs text-muted-foreground sm:text-sm">{t.text}</span>
+            </span>
+          </div>
+        ))}
       </Container>
     </section>
   );
@@ -445,29 +470,59 @@ export function Faq() {
   );
 }
 
+/* ---------------- FINAL CTA ---------------- */
+export function FinalCta() {
+  return (
+    <section className="px-4 py-16 sm:px-6 sm:py-24">
+      <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[2rem] bg-navy px-6 py-12 text-center text-navy-foreground shadow-elegant sm:px-12 sm:py-16">
+        <div aria-hidden className="pointer-events-none absolute -top-24 left-1/2 size-[32rem] -translate-x-1/2 rounded-full bg-bright/30 blur-3xl" />
+        <div className="relative">
+          <h2 className="text-3xl font-extrabold tracking-tight text-balance sm:text-4xl lg:text-5xl">
+            O seu espaço impecável, <span className="font-serif font-normal italic">sem complicações.</span>
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-navy-foreground/75 sm:text-lg">Fale connosco e receba um orçamento sem compromisso.</p>
+          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+            <Button asChild variant="whatsapp" size="xl"><a href={whatsappLink(DEFAULT_WA_MESSAGE)} target="_blank" rel="noopener noreferrer"><MessageCircle /> Falar no WhatsApp</a></Button>
+            <Button asChild variant="soft" size="xl"><a href={PHONE_TEL}><Phone /> Ligar {PHONE_DISPLAY}</a></Button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ---------------- FOOTER ---------------- */
 export function Footer() {
   return (
     <footer className="bg-navy pt-14 pb-28 text-navy-foreground sm:pt-20 lg:pb-10">
       <Container>
-        <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
-          <div>
+        <div className="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-[1.4fr_1fr_1fr_1.1fr]">
+          <div className="col-span-2 lg:col-span-1">
             <Logo light />
-            <p className="mt-5 max-w-sm text-navy-foreground/65">CleanDireto — Limpezas Profissionais. Coimbra, Portugal.</p>
+            <p className="mt-5 max-w-sm text-sm leading-relaxed text-navy-foreground/65 sm:text-base">Limpezas profissionais para casas, empresas e condomínios em Coimbra e na Região Centro.</p>
+            <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" aria-label="CleanDireto no Facebook"
+              className="mt-5 inline-grid size-11 place-items-center rounded-full bg-navy-foreground/10 transition-colors hover:bg-[#1877F2]"><Facebook className="size-5" /></a>
           </div>
-          <nav aria-label="Rodapé">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky">Secções</p>
-            <ul className="mt-5 grid gap-2.5">
-              {[...NAV, { href: "#orcamento", label: "Orçamento" }].map((n) => <li key={n.href}><a href={n.href} className="inline-flex min-h-9 items-center text-navy-foreground/75 hover:text-navy-foreground">{n.label}</a></li>)}
-            </ul>
-          </nav>
           <div>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky">Serviços</p>
+            <ul className="mt-4 grid gap-1 text-sm">
+              {SERVICES.map((sv) => <li key={sv.title}><a href="#servicos" className="inline-flex min-h-9 items-center text-navy-foreground/75 hover:text-navy-foreground">{sv.title}</a></li>)}
+            </ul>
+          </div>
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky">Zonas</p>
+            <ul className="mt-4 grid gap-1 text-sm text-navy-foreground/75">
+              {ZONES.slice(0, 6).map((z) => <li key={z} className="flex min-h-9 items-center">{z}</li>)}
+              <li className="flex min-h-9 items-center"><a href="#zonas" className="hover:text-navy-foreground">e arredores →</a></li>
+            </ul>
+          </div>
+          <div className="col-span-2 lg:col-span-1">
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky">Contactos</p>
-            <ul className="mt-5 grid gap-3 text-navy-foreground/75">
-              <li><a href={PHONE_TEL} className="flex items-center gap-2 hover:text-navy-foreground"><Phone className="size-4" /> {PHONE_DISPLAY}</a></li>
-              <li><a href={whatsappLink(DEFAULT_WA_MESSAGE)} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-navy-foreground"><MessageCircle className="size-4" /> WhatsApp</a></li>
-              <li><a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-navy-foreground"><Facebook className="size-4" /> Facebook</a></li>
-              <li className="flex items-center gap-2"><MapPin className="size-4" /> Coimbra, Portugal</li>
+            <ul className="mt-4 grid gap-1 text-sm text-navy-foreground/75">
+              <li><a href={PHONE_TEL} className="inline-flex min-h-9 items-center gap-2 hover:text-navy-foreground"><Phone className="size-4" /> {PHONE_DISPLAY}</a></li>
+              <li><a href={whatsappLink(DEFAULT_WA_MESSAGE)} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-9 items-center gap-2 hover:text-navy-foreground"><MessageCircle className="size-4" /> WhatsApp</a></li>
+              <li><a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-9 items-center gap-2 hover:text-navy-foreground"><Facebook className="size-4" /> Facebook</a></li>
+              <li className="flex min-h-9 items-center gap-2"><MapPin className="size-4" /> Coimbra, Portugal</li>
             </ul>
           </div>
         </div>

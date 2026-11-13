@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Header } from "@/components/site/Header";
 import {
-  About, Faq, Footer, Gallery, Hero, Process, QuoteSection, Services, Testimonials, Video, WhatsAppFab, Why, Zones,
+  About, Faq, FinalCta, Footer, Gallery, Hero, Process, QuoteSection, Services, Testimonials, TrustStrip, Video, WhatsAppFab, Why, Zones,
 } from "@/components/site/Sections";
 
 const SITE_URL = "https://cleandireto.netlify.app"; // endereço grátis; mudar quando houver cleandireto.com
@@ -63,6 +63,7 @@ function Index() {
       <Header />
       <main>
         <Hero />
+        <TrustStrip />
         <Services />
         <Gallery />
         <About />
@@ -73,6 +74,7 @@ function Index() {
         <QuoteSection />
         <Testimonials />
         <Faq />
+        <FinalCta />
       </main>
       <Footer />
       <WhatsAppFab />

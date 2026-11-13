@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { Menu, Phone, X } from "lucide-react";
+import { Menu, MessageCircle, Phone, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import markUrl from "@/assets/cleandireto-mark.webp";
-import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/contact";
+import { DEFAULT_WA_MESSAGE, PHONE_DISPLAY, PHONE_TEL, whatsappLink } from "@/lib/contact";
 
 export const NAV = [
   { href: "#servicos", label: "Serviços" },
@@ -48,6 +48,10 @@ export function Header() {
         <div className="flex items-center gap-2">
           <a href={PHONE_TEL} className="hidden items-center gap-2 px-3 text-sm font-bold text-navy hover:text-primary md:flex">
             <Phone className="size-4" /> {PHONE_DISPLAY}
+          </a>
+          <a href={whatsappLink(DEFAULT_WA_MESSAGE)} target="_blank" rel="noopener noreferrer" aria-label="Falar no WhatsApp"
+            className="hidden size-10 place-items-center rounded-full bg-whatsapp text-whatsapp-foreground transition-transform hover:scale-105 sm:grid">
+            <MessageCircle className="size-5" />
           </a>
           <Button asChild variant="hero" className="hidden sm:inline-flex">
             <a href="#orcamento">Pedir Orçamento</a>
