@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from "react";
 import {
   ArrowRight, Building2, CalendarCheck, Camera, Check, ClipboardList, Facebook, HardHat, Home, HeartHandshake,
-  MapPin, MessageCircle, Phone, Play, Quote, Smartphone, Sofa, Sparkles, Star, Warehouse, Search, Briefcase, Send, ShieldCheck,
+  MapPin, MessageCircle, Phone, Play, Quote, Video as VideoIcon, Smartphone, Sofa, Sparkles, Star, Warehouse, Search, Briefcase, Send, ShieldCheck,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -10,7 +10,6 @@ import { Logo, NAV } from "./Header";
 import { cn } from "@/lib/utils";
 import heroImg from "@/assets/hero-interior.jpg";
 import officeImg from "@/assets/office-clean.jpg";
-import homeVideoUrl from "@/assets/clean-home-video.mp4";
 import {
   DEFAULT_WA_MESSAGE, FACEBOOK_URL, PHONE_DISPLAY, PHONE_TEL, buildQuoteMessage, whatsappLink,
 } from "@/lib/contact";
@@ -281,23 +280,23 @@ export function Process() {
 }
 
 /* ---------------- VIDEO ---------------- */
-// Vídeo ilustrativo (gerado). Substituir por vídeo real fornecido pelo cliente quando existir.
-const VIDEO_URL: string | null = homeVideoUrl;
+// Espaço reservado para o vídeo real da CleanDireto: importar o ficheiro e colocar aqui o URL (ex.: import video from "@/assets/apresentacao.mp4").
+const VIDEO_URL: string | null = null;
 export function Video() {
   const [playing, setPlaying] = useState(false);
   return (
     <section id="video" className="bg-muted py-16 sm:py-24 lg:py-32">
       <Container>
-        <SectionHeading eyebrow="Vídeo" title="Espaços limpos, vidas mais leves." subtitle="Vídeo ilustrativo. Em breve, imagens reais dos trabalhos da CleanDireto." />
+        <SectionHeading eyebrow="Vídeo" title="Espaços limpos, vidas mais leves." subtitle="Em breve, um vídeo de apresentação dos trabalhos da CleanDireto." />
         <Reveal className="relative mx-auto mt-12 max-w-5xl overflow-hidden rounded-[2rem] shadow-elegant">
           {playing && VIDEO_URL ? (
             <video src={VIDEO_URL} controls autoPlay playsInline preload="metadata" className="aspect-video w-full bg-navy" />
           ) : (
-            <button type="button" disabled={!VIDEO_URL} onClick={() => setPlaying(true)} className="group relative block aspect-video w-full" aria-label={VIDEO_URL ? "Reproduzir vídeo" : "Vídeo em preparação"}>
+            <button type="button" disabled={!VIDEO_URL} onClick={() => setPlaying(true)} className="group relative block aspect-video w-full disabled:cursor-default" aria-label={VIDEO_URL ? "Reproduzir vídeo" : "Vídeo em preparação"}>
               <img src={heroImg} alt="" loading="lazy" className="absolute inset-0 size-full object-cover" />
               <span className="absolute inset-0 bg-navy/45" />
               <span className="relative flex flex-col items-center gap-4">
-                <span className="grid size-20 place-items-center rounded-full bg-card text-primary shadow-elegant transition-transform group-enabled:group-hover:scale-110"><Play className="ml-1 size-8 fill-current" /></span>
+                <span className="grid size-20 place-items-center rounded-full bg-card text-primary shadow-elegant transition-transform group-enabled:group-hover:scale-110">{VIDEO_URL ? <Play className="ml-1 size-8 fill-current" /> : <VideoIcon className="size-8" />}</span>
                 <span className="rounded-full bg-navy/60 px-4 py-1.5 text-sm font-bold text-navy-foreground">{VIDEO_URL ? "Ver vídeo" : "Vídeo de apresentação em breve"}</span>
               </span>
             </button>
