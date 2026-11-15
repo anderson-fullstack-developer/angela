@@ -12,8 +12,8 @@ const SITE_URL = "https://cleandireto.vercel.app"; // endereço grátis; mudar q
 const TITLE = "CleanDireto | Limpezas Profissionais em Coimbra";
 const DESC =
   "Limpeza doméstica, pós-obra, bolores, escritórios e condomínios em Coimbra e arredores. Peça o seu orçamento sem compromisso por WhatsApp.";
-const SHARE_TITLE = "CleanDireto | O seu espaço impecável";
-const SHARE_DESC = "Limpezas profissionais em Coimbra e arredores. Peça o seu orçamento sem compromisso!";
+const SHARE_TITLE = "CleanDireto | Limpezas em Coimbra e arredores";
+const SHARE_DESC = "Casas, escritórios, condomínios, pós-obra e bolores. Orçamento gratuito por WhatsApp.";
 
 const localBusiness = {
   "@context": "https://schema.org",
@@ -22,7 +22,7 @@ const localBusiness = {
   name: "CleanDireto",
   description: DESC,
   url: `${SITE_URL}/`,
-  image: `${SITE_URL}/og-share.jpg`,
+  image: `${SITE_URL}/og-cleandireto.jpg`,
   logo: `${SITE_URL}/favicon-512x512.png`,
   telephone: "+351932929914",
   areaServed: [{ "@type": "City", name: "Coimbra" }, { "@type": "City", name: "Condeixa-a-Nova" }, { "@type": "City", name: "Lousã" }],
@@ -44,8 +44,8 @@ export const Route = createFileRoute("/")({
       { property: "og:locale", content: "pt_PT" },
       { property: "og:url", content: `${SITE_URL}/` },
       // 1200x630 com o conteúdo ao centro: fica inteiro no Facebook e no recorte quadrado do WhatsApp.
-      { property: "og:image", content: `${SITE_URL}/og-share.jpg` },
-      { property: "og:image:secure_url", content: `${SITE_URL}/og-share.jpg` },
+      { property: "og:image", content: `${SITE_URL}/og-cleandireto.jpg` },
+      { property: "og:image:secure_url", content: `${SITE_URL}/og-cleandireto.jpg` },
       { property: "og:image:type", content: "image/jpeg" },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
@@ -53,7 +53,7 @@ export const Route = createFileRoute("/")({
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: SHARE_TITLE },
       { name: "twitter:description", content: SHARE_DESC },
-      { name: "twitter:image", content: `${SITE_URL}/og-share.jpg` },
+      { name: "twitter:image", content: `${SITE_URL}/og-cleandireto.jpg` },
     ],
     links: [{ rel: "canonical", href: `${SITE_URL}/` }],
     scripts: [{ type: "application/ld+json", children: JSON.stringify(localBusiness) }],
