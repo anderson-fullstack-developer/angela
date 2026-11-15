@@ -381,8 +381,8 @@ export function Process() {
 }
 
 /* ---------------- VIDEO ---------------- */
-// Vídeo real enviado pelo cliente (limpeza de bolores). Vertical, H.264, só carrega quando se carrega em Play.
-const VIDEO = { src: "/videos/limpeza-bolores.mp4", poster: "/videos/limpeza-bolores-poster.jpg", title: "Limpeza de bolores" };
+// Vídeo real enviado pelo cliente (Boloresfinal.mov), convertido para H.264 + AAC 1080x1920 com som. Só carrega ao carregar em Play.
+const VIDEO = { src: "/videos/limpeza-bolores-som.mp4", poster: "/videos/limpeza-bolores-som-poster.jpg", title: "Limpeza de bolores" };
 export function Video() {
   return (
     <section id="video" className="py-14 sm:py-20 lg:py-28">
