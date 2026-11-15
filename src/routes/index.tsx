@@ -8,7 +8,7 @@ import {
   About, FAQ, Faq, FinalCta, Footer, Gallery, Hero, Process, SERVICES, Stats, QuoteSection, Services, Testimonials, VIDEO, Video, WhatsAppFab, Zones,
 } from "@/components/site/Sections";
 
-const SITE_URL = "https://cleandireto.vercel.app"; // endereço grátis; mudar quando houver cleandireto.com
+const SITE_URL = "https://clean-direto.netlify.app"; // endereço grátis (Netlify); mudar quando houver domínio próprio
 const TITLE = "CleanDireto | Limpezas Profissionais em Coimbra";
 const DESC =
   "Limpeza doméstica, pós-obra, bolores, escritórios e condomínios em Coimbra e arredores. Peça o seu orçamento sem compromisso por WhatsApp.";

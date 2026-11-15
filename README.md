@@ -22,7 +22,7 @@
 
 ## Tech stack
 
-React 19 · TanStack Start · TypeScript · Tailwind CSS · Radix UI · Vitest · designed in Lovable · deployed on Vercel
+React 19 · TanStack Start · TypeScript · Tailwind CSS · Radix UI · Vitest · designed in Lovable · deployed on Netlify
 
 ## Running locally
 
@@ -32,7 +32,7 @@ npm run dev
 npm test
 ```
 
-Deployed on Vercel: build settings live in [`vercel.json`](vercel.json) (`NITRO_PRESET=vercel`). A [`netlify.toml`](netlify.toml) is also included.
+Deployed on Netlify at https://clean-direto.netlify.app: build settings live in [`netlify.toml`](netlify.toml) (`NITRO_PRESET=netlify`). The old Vercel URLs permanently redirect there via [`vercel.json`](vercel.json).
 
 ## Author
 

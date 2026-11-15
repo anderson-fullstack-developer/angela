@@ -42,11 +42,11 @@ Authorise with the client's Google account and copy the **Web app URL** (`https:
 
 ## 4. Connect the website
 
-In Vercel: **Project → Settings → Environment Variables**
+In Netlify: **Project configuration → Environment variables**
 - Name: `VITE_QUOTE_SHEET_URL`
 - Value: the Web app URL
 
-Redeploy. From then on, every WhatsApp/SMS submission is also saved in the sheet, and the privacy note under the form changes automatically.
+Trigger a new deploy (**Deploys → Trigger deploy**). From then on, every WhatsApp/SMS submission is also saved in the sheet, and the privacy note under the form changes automatically.
 
 ## Privacy
 

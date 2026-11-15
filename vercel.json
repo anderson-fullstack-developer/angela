@@ -1,5 +1,8 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
-  "buildCommand": "NITRO_PRESET=vercel vite build"
+  "buildCommand": "NITRO_PRESET=vercel vite build",
+  "redirects": [
+    { "source": "/(.*)", "destination": "https://clean-direto.netlify.app/$1", "permanent": true }
+  ]
 }
