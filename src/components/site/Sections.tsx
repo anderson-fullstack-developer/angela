@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from "react";
 import {
   ArrowRight, Building2, CalendarCheck, Camera, Check, ClipboardList, Facebook, HardHat, Home, HeartHandshake,
-  MapPin, MessageCircle, Phone, Play, Quote, Video as VideoIcon, Smartphone, Sofa, Sparkles, Star, Warehouse, Search, Briefcase, Send, ShieldCheck,
+  MapPin, MessageCircle, Phone, Play, Quote, Video as VideoIcon, Smartphone, Sofa, Sparkles, Star, Warehouse, Search, Briefcase, Send, ShieldCheck, Award, Crown,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -84,6 +84,38 @@ export function TrustStrip() {
             </span>
           </div>
         ))}
+      </Container>
+    </section>
+  );
+}
+
+/* ---------------- PERCURSO (pedido do cliente) ---------------- */
+// Anos indicados pelo Nuno. Se a data de início da atividade mudar, alterar aqui.
+const JOURNEY = [
+  { icon: Award, year: "2023", text: "Compromisso desde o início." },
+  { icon: ShieldCheck, year: "2024", text: "Consolidação da confiança local." },
+  { icon: Crown, year: "2025", text: "Padrão de rigor reforçado." },
+];
+export function Journey() {
+  return (
+    <section aria-label="O nosso percurso" className="bg-card py-14 sm:py-20">
+      <Container>
+        <Reveal><p className="mx-auto max-w-2xl text-center text-sm leading-relaxed text-muted-foreground sm:text-base">Compromisso com a qualidade, o rigor e a confiança no serviço prestado.</p></Reveal>
+        <div className="mx-auto mt-10 grid max-w-5xl gap-4 sm:grid-cols-3 sm:gap-6">
+          {JOURNEY.map((j, i) => (
+            <Reveal key={j.year} delay={i * 80}>
+              <div className="h-full rounded-[2rem] bg-gradient-to-br from-sky/60 to-card px-6 py-8 text-center shadow-soft">
+                <span className="relative mx-auto grid size-24 place-items-center rounded-full bg-card text-primary shadow-elegant">
+                  <span aria-hidden className="absolute inset-2 rounded-full border-2 border-dashed border-sky" />
+                  <j.icon className="relative size-9" />
+                </span>
+                <p className="mt-6 text-xs font-bold uppercase tracking-[0.22em] text-primary">Compromisso com a qualidade</p>
+                <p className="mt-1 text-4xl font-extrabold text-navy">{j.year}</p>
+                <p className="mt-2 text-sm text-muted-foreground">{j.text}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
       </Container>
     </section>
   );
