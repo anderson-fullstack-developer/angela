@@ -522,11 +522,10 @@ export function QuoteSection() {
 
 /* ---------------- TESTIMONIALS ---------------- */
 type Testimonial = { name: string; place: string; service: string; text: string };
-// Público: só opiniões verdadeiras de clientes (nome ou iniciais + localidade), com autorização.
-const TESTIMONIALS: Testimonial[] = [];
-// Textos provisórios enviados pelo Nuno ("Comentários para apresentação provisória").
-// Só aparecem com ?apresentacao no endereço, marcados como exemplo. Nunca no site público.
-const PREVIEW_TESTIMONIALS: Testimonial[] = [
+// Comentários enviados e autorizados pelo Nuno Alves (CleanDireto) para publicação, 15/11/2026.
+// Publicados tal como recebidos, só com o tipo de serviço (sem nomes inventados).
+// Quando houver nome/iniciais e localidade dos clientes, preencher name e place.
+const TESTIMONIALS: Testimonial[] = [
   { name: "", place: "", service: "Limpeza doméstica", text: "Fiquei muito satisfeita com a limpeza! A casa ficou impecável, tudo muito bem cuidado e com atenção aos pequenos detalhes. Recomendo!" },
   { name: "", place: "", service: "Limpeza pós-obra", text: "Contratei o serviço para uma limpeza pós-obra e gostei bastante do resultado. O espaço ficou muito bem apresentado e pronto a utilizar." },
   { name: "", place: "", service: "Atendimento", text: "Gostei muito da comunicação e do cuidado com o serviço. Foram atenciosos e esclareceram todas as minhas dúvidas." },
@@ -543,20 +542,12 @@ function Stars() {
 }
 
 export function Testimonials() {
-  const [preview, setPreview] = useState(false);
-  useEffect(() => { setPreview(new URLSearchParams(window.location.search).has("apresentacao")); }, []);
-  const list = TESTIMONIALS.length ? TESTIMONIALS : preview ? PREVIEW_TESTIMONIALS : [];
+  const list = TESTIMONIALS;
   if (!list.length) return null;
-  const isPreview = !TESTIMONIALS.length;
   return (
     <section id="testemunhos" className="py-14 sm:py-20 lg:py-28">
       <Container>
         <SectionHeading eyebrow="Testemunhos" title="O que dizem os clientes" />
-        {isPreview && (
-          <p className="mx-auto mt-5 w-fit rounded-full border border-dashed border-amber-400 bg-amber-50 px-4 py-1.5 text-center text-xs font-bold text-amber-800">
-            Pré-visualização · textos provisórios, a substituir por opiniões reais
-          </p>
-        )}
         <div className="-mx-5 mt-8 flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-2 [scrollbar-width:none] sm:mx-0 sm:mt-12 sm:grid sm:grid-cols-2 sm:gap-4 sm:overflow-visible sm:px-0 lg:grid-cols-3 [&::-webkit-scrollbar]:hidden">
           {list.map((t) => (
             <figure key={t.text} className="flex w-[85%] max-w-[340px] shrink-0 snap-center flex-col rounded-2xl border border-border bg-card p-5 sm:w-auto sm:max-w-none sm:p-6">
