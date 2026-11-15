@@ -75,35 +75,44 @@ const STATS = [
   { value: "6", label: "Tipos de serviço" },
   { value: "10+", label: "Localidades servidas" },
 ];
-// Conta de 0 até ao valor quando o número aparece no ecrã. Sem JavaScript ou com
-// "reduzir movimento" ativo, mostra logo o valor final.
-function CountUp({ value, duration = 1600 }: { value: string; duration?: number }) {
+// Conta de 0 até ao valor quando a faixa fica visível. O valor real está sempre no HTML
+// (texto só para leitores de ecrã e motores de pesquisa); com "reduzir movimento" mostra logo o final.
+function CountUp({ value, duration = 2200 }: { value: string; duration?: number }) {
   const m = value.match(/^(\D*)(\d+)(.*)$/);
   const target = m ? Number(m[2]) : 0;
-  const [n, setN] = useState(target);
+  const [n, setN] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
   useEffect(() => {
     const el = ref.current;
-    if (!m || !el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    setN(0);
-    let raf = 0;
-    const io = new IntersectionObserver(([e]) => {
-      if (!e?.isIntersecting) return;
+    if (!m || !el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { setN(target); return; }
+    let raf = 0, timer = 0, started = false;
+    const start = (delay: number) => {
+      if (started) return;
+      started = true;
       io.disconnect();
-      const t0 = performance.now();
-      const tick = (t: number) => {
-        const p = Math.min((t - t0) / duration, 1);
-        setN(Math.round(target * (1 - Math.pow(1 - p, 3))));
-        if (p < 1) raf = requestAnimationFrame(tick);
-      };
-      raf = requestAnimationFrame(tick);
-    }, { threshold: 0.4 });
+      timer = window.setTimeout(() => {
+        const t0 = performance.now();
+        const tick = (t: number) => {
+          const p = Math.min((t - t0) / duration, 1);
+          setN(Math.round(target * (1 - Math.pow(1 - p, 3))));
+          if (p < 1) raf = requestAnimationFrame(tick);
+        };
+        raf = requestAnimationFrame(tick);
+      }, delay);
+    };
+    // Começa quando o número está bem dentro do ecrã (não colado ao fundo).
+    const io = new IntersectionObserver(([e]) => { if (e?.isIntersecting) start(250); }, { threshold: 1, rootMargin: "0px 0px -12% 0px" });
     io.observe(el);
-    return () => { io.disconnect(); cancelAnimationFrame(raf); };
+    // Se já se vê ao abrir a página (ex.: no fundo de um ecrã grande), começa na mesma pouco depois.
+    const r = el.getBoundingClientRect();
+    const fallback = r.top < window.innerHeight && r.bottom > 0 ? window.setTimeout(() => start(0), 1500) : 0;
+    return () => { io.disconnect(); cancelAnimationFrame(raf); clearTimeout(timer); clearTimeout(fallback); };
   }, [value]);
   if (!m) return <>{value}</>;
   return (
-    <span ref={ref} aria-label={value}>
+    <span ref={ref}>
+      <span className="sr-only">{value}</span>
       <span aria-hidden>{m[1]}{n}{m[3]}</span>
     </span>
   );
