@@ -1,7 +1,6 @@
 import { useState, type FormEvent } from "react";
 import {
-  ArrowRight, Building2, CalendarCheck, Camera, Check, ClipboardList, Facebook, HardHat, Home, HeartHandshake,
-  MapPin, MessageCircle, Phone, Play, Quote, Video as VideoIcon, Smartphone, Sofa, Sparkles, Star, Warehouse, Search, Briefcase, Send, ShieldCheck, Award, Crown, Clock, Heart, Layers,
+  ArrowRight, Building2, CalendarCheck, Camera, Check, ClipboardList, Facebook, HardHat, Home, MapPin, MessageCircle, Phone, Play, Quote, Smartphone, Sofa, Sparkles, Star, Warehouse, Briefcase, Send,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -9,8 +8,12 @@ import { Reveal, SectionHeading } from "./Reveal";
 import { NAV } from "./Header";
 import logoUrl from "@/assets/cleandireto-logo.webp";
 import { cn } from "@/lib/utils";
-import heroImg from "@/assets/hero-interior.jpg";
-import officeImg from "@/assets/office-clean.jpg";
+import quartoAntes from "@/assets/trabalhos/quarto-antes.webp";
+import quartoDepois from "@/assets/trabalhos/quarto-depois.webp";
+import wcCantoAntes from "@/assets/trabalhos/casa-de-banho-canto-antes.webp";
+import wcCantoDepois from "@/assets/trabalhos/casa-de-banho-canto-depois.webp";
+import wcParedeAntes from "@/assets/trabalhos/casa-de-banho-parede-antes.webp";
+import wcParedeDepois from "@/assets/trabalhos/casa-de-banho-parede-depois.webp";
 import {
   DEFAULT_WA_MESSAGE, FACEBOOK_URL, PHONE_DISPLAY, PHONE_TEL, SHEET_URL, URGENCY_OPTIONS, buildQuoteMessage, saveQuoteToSheet, whatsappLink, type QuoteData,
 } from "@/lib/contact";
@@ -22,68 +25,43 @@ const Container = ({ className, children }: { className?: string; children: Reac
 /* ---------------- HERO ---------------- */
 export function Hero() {
   return (
-    <section id="top" className="relative overflow-hidden bg-gradient-soft pt-32 pb-20 lg:pt-40 lg:pb-28">
-      <div aria-hidden className="pointer-events-none absolute -top-40 -right-40 size-[38rem] rounded-full bg-sky/70 blur-3xl" />
-      <Container className="relative grid items-center gap-14 lg:grid-cols-[1.05fr_1fr]">
+    <section id="top" className="relative bg-gradient-soft pt-28 pb-16 sm:pt-32 lg:pt-36 lg:pb-24">
+      <Container className="grid items-center gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
         <Reveal>
-          <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-primary shadow-soft">
-            <MapPin className="size-3.5" /> Coimbra e arredores
-          </span>
-          <h1 className="mt-7 text-4xl font-extrabold leading-[1.05] tracking-tight text-navy sm:text-5xl lg:text-[3.6rem] text-balance">
-            Espaços impecáveis, <span className="font-serif font-normal italic text-gradient-brand">com cuidado em cada detalhe.</span>
-          </h1>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
-            Na CleanDireto, cuidamos da limpeza de casas, empresas e espaços comerciais com atenção a cada detalhe.
+          <p className="inline-flex items-center gap-2 text-sm font-semibold text-primary">
+            <Sparkles className="size-4" /> Orçamento gratuito · Resposta média de 10 horas
           </p>
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-            <Button asChild variant="hero" size="xl"><a href="#orcamento">Pedir Orçamento Gratuito <ArrowRight /></a></Button>
+          <h1 className="mt-5 text-4xl font-extrabold leading-[1.08] tracking-tight text-navy sm:text-5xl lg:text-[3.4rem] text-balance">
+            Limpezas profissionais em Coimbra e arredores.
+          </h1>
+          <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
+            Casas, escritórios, condomínios, limpezas pós-obra e remoção de bolores. Diga-nos o que precisa e enviamos um orçamento gratuito, em média em 10 horas.
+          </p>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <Button asChild variant="hero" size="xl"><a href="#orcamento">Pedir orçamento gratuito <ArrowRight /></a></Button>
             <Button asChild variant="whatsapp" size="xl">
               <a href={whatsappLink(DEFAULT_WA_MESSAGE)} target="_blank" rel="noopener noreferrer"><MessageCircle /> Falar no WhatsApp</a>
             </Button>
           </div>
-          <ul className="mt-10 flex flex-wrap gap-x-6 gap-y-3 text-sm font-semibold text-navy/80">
-            {["Casas", "Empresas", "Condomínios", "Pós-obra"].map((t) => (
-              <li key={t} className="flex items-center gap-2"><Check className="size-4 text-bright" /> {t}</li>
+          <ul className="mt-8 grid gap-2.5 text-sm font-semibold text-navy/80 sm:flex sm:flex-wrap sm:gap-x-6">
+            {["Coimbra, Condeixa-a-Nova e Lousã", "Particulares e empresas", "Datas à sua medida"].map((t) => (
+              <li key={t} className="flex items-center gap-2"><Check className="size-4 shrink-0 text-bright" /> {t}</li>
             ))}
           </ul>
         </Reveal>
-        <Reveal delay={150} className="relative">
-          <div className="relative overflow-hidden rounded-[2rem] shadow-elegant">
-            <img src={heroImg} alt="Sala de estar luminosa e impecavelmente limpa" width={1536} height={1152} className="aspect-[4/3.4] w-full object-cover" fetchPriority="high" />
-          </div>
-          <div className="glass absolute -bottom-6 left-4 flex items-center gap-3 rounded-2xl border border-border/60 p-4 shadow-soft sm:-left-8">
-            <span className="grid size-11 place-items-center rounded-xl bg-gradient-brand text-primary-foreground"><Sparkles className="size-5" /></span>
-            <span>
-              <span className="block text-sm font-extrabold text-navy">Orçamento sem compromisso</span>
-              <span className="block text-xs text-muted-foreground">Diga-nos do que precisa</span>
-            </span>
-          </div>
+        <Reveal delay={120}>
+          <figure>
+            <div className="grid grid-cols-2 gap-2 overflow-hidden rounded-3xl shadow-elegant sm:gap-3">
+              {[{ src: quartoAntes, tag: "Antes" }, { src: quartoDepois, tag: "Depois" }].map((p, i) => (
+                <div key={p.tag} className="relative">
+                  <img src={p.src} alt={`${p.tag} da limpeza de bolores num quarto`} width={720} height={960} className="aspect-[3/4] w-full object-cover" {...(i === 0 ? { fetchPriority: "high" as const } : {})} />
+                  <span className={cn("absolute top-3 left-3 rounded-md px-2.5 py-1 text-xs font-bold", i === 0 ? "bg-navy/80 text-white" : "bg-white text-navy")}>{p.tag}</span>
+                </div>
+              ))}
+            </div>
+            <figcaption className="mt-3 text-sm text-muted-foreground">Limpeza de bolores num quarto. Fotografias de um trabalho real da CleanDireto.</figcaption>
+          </figure>
         </Reveal>
-      </Container>
-    </section>
-  );
-}
-
-/* ---------------- TRUST STRIP ---------------- */
-const TRUST = [
-  { icon: ShieldCheck, title: "Orçamento gratuito", text: "Sem compromisso" },
-  { icon: MessageCircle, title: "Resposta por WhatsApp", text: "Contacto direto e rápido" },
-  { icon: MapPin, title: "Coimbra e arredores", text: "Vamos até si" },
-  { icon: Building2, title: "Particulares e empresas", text: "Casas, escritórios e condomínios" },
-];
-export function TrustStrip() {
-  return (
-    <section aria-label="Vantagens" className="border-y border-border bg-card">
-      <Container className="grid grid-cols-2 gap-x-4 gap-y-6 py-8 lg:grid-cols-4 lg:py-10">
-        {TRUST.map((t) => (
-          <div key={t.title} className="flex items-center gap-3">
-            <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-secondary text-primary"><t.icon className="size-5" /></span>
-            <span className="min-w-0">
-              <span className="block text-sm font-extrabold leading-tight text-navy sm:text-base">{t.title}</span>
-              <span className="block text-xs text-muted-foreground sm:text-sm">{t.text}</span>
-            </span>
-          </div>
-        ))}
       </Container>
     </section>
   );
@@ -91,22 +69,21 @@ export function TrustStrip() {
 
 /* ---------------- NÚMEROS (dados indicados e autorizados pelo cliente, 15/11/2026) ---------------- */
 const STATS = [
-  { icon: Sparkles, value: "1000+", label: "Espaços tratados" },
-  { icon: Heart, value: "98%", label: "Satisfação estimada" },
-  { icon: Clock, value: "10h", label: "Resposta média" },
-  { icon: Layers, value: "6", label: "Tipos de serviço" },
-  { icon: MapPin, value: "10+", label: "Zonas de atuação" },
+  { value: "1000+", label: "Espaços limpos" },
+  { value: "98%", label: "Clientes satisfeitos (estimativa)" },
+  { value: "10h", label: "Tempo médio de resposta" },
+  { value: "6", label: "Tipos de serviço" },
+  { value: "10+", label: "Localidades servidas" },
 ];
 export function Stats() {
   return (
-    <section aria-label="Números da CleanDireto" className="bg-card pt-12 sm:pt-16">
+    <section aria-label="Números da CleanDireto" className="border-y border-border bg-card py-10 sm:py-12">
       <Container>
-        <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-5">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3 lg:grid-cols-5 lg:gap-x-0">
           {STATS.map((st, i) => (
-            <Reveal key={st.label} delay={i * 60} className={cn(i === STATS.length - 1 && "col-span-2 lg:col-span-1")}>
-              <div className="h-full rounded-3xl border border-border bg-card p-5 shadow-soft transition-shadow hover:shadow-elegant sm:p-6">
-                <span className="grid size-11 place-items-center rounded-2xl bg-secondary text-primary"><st.icon className="size-5" /></span>
-                <p className="mt-4 text-3xl font-extrabold tracking-tight text-navy sm:text-4xl">{st.value}</p>
+            <Reveal key={st.label} delay={i * 60}>
+              <div className={cn("h-full", i > 0 && "lg:border-l lg:border-border lg:pl-6")}>
+                <p className="text-3xl font-extrabold tracking-tight text-navy sm:text-4xl">{st.value}</p>
                 <p className="mt-1 text-sm text-muted-foreground">{st.label}</p>
               </div>
             </Reveal>
@@ -120,55 +97,31 @@ export function Stats() {
 /* ---------------- PERCURSO (pedido do cliente) ---------------- */
 // Anos indicados pelo Nuno. Se a data de início da atividade mudar, alterar aqui.
 const JOURNEY = [
-  { icon: Award, year: "2023", text: "Compromisso desde o início." },
-  { icon: ShieldCheck, year: "2024", text: "Consolidação da confiança local." },
-  { icon: Crown, year: "2025", text: "Padrão de rigor reforçado." },
+  { year: "2023", text: "Início da atividade em Coimbra, com limpezas domésticas." },
+  { year: "2024", text: "Mais serviços: pós-obra, escritórios e condomínios." },
+  { year: "2025", text: "Clientes regulares em Coimbra, Condeixa-a-Nova e Lousã." },
 ];
-export function Journey() {
-  return (
-    <section aria-label="O nosso percurso" className="bg-card py-14 sm:py-20">
-      <Container>
-        <Reveal><p className="mx-auto max-w-2xl text-center text-sm leading-relaxed text-muted-foreground sm:text-base">Compromisso com a qualidade, o rigor e a confiança no serviço prestado.</p></Reveal>
-        <div className="mx-auto mt-10 grid max-w-5xl gap-4 sm:grid-cols-3 sm:gap-6">
-          {JOURNEY.map((j, i) => (
-            <Reveal key={j.year} delay={i * 80}>
-              <div className="h-full rounded-[2rem] bg-gradient-to-br from-sky/60 to-card px-6 py-8 text-center shadow-soft">
-                <span className="relative mx-auto grid size-24 place-items-center rounded-full bg-card text-primary shadow-elegant">
-                  <span aria-hidden className="absolute inset-2 rounded-full border-2 border-dashed border-sky" />
-                  <j.icon className="relative size-9" />
-                </span>
-                <p className="mt-6 text-xs font-bold uppercase tracking-[0.22em] text-primary">Compromisso com a qualidade</p>
-                <p className="mt-1 text-4xl font-extrabold text-navy">{j.year}</p>
-                <p className="mt-2 text-sm text-muted-foreground">{j.text}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </Container>
-    </section>
-  );
-}
 
 /* ---------------- SERVICES ---------------- */
 const SERVICES = [
-  { icon: Home, title: "Limpeza Doméstica", text: "Limpezas de habitações para manter o ambiente limpo, agradável e confortável." },
-  { icon: HardHat, title: "Limpeza Pós-Obra", text: "Remoção de pó e sujidade após obras ou remodelações, preparando os espaços para utilização." },
-  { icon: Briefcase, title: "Escritórios e Empresas", text: "Limpeza de espaços profissionais, com soluções adaptadas às necessidades de cada empresa." },
-  { icon: Building2, title: "Condomínios e Edifícios", text: "Limpeza de entradas, escadas e espaços comuns." },
-  { icon: Sofa, title: "Sofás e Carpetes", text: "Limpeza de sofás e carpetes. Contacte-nos para confirmar disponibilidade para o seu caso." },
-  { icon: Warehouse, title: "Limpeza de Telhados", text: "Limpeza de telhados. Fale connosco para avaliarmos o seu caso e confirmarmos disponibilidade." },
+  { icon: Home, title: "Limpeza Doméstica", text: "Limpeza regular ou pontual da casa: cozinha, casas de banho, quartos e zonas comuns. Inclui remoção de bolores." },
+  { icon: HardHat, title: "Limpeza Pós-Obra", text: "Retiramos o pó da obra, restos de tinta e de cimento, e deixamos a casa pronta a habitar." },
+  { icon: Briefcase, title: "Escritórios e Empresas", text: "Limpeza de escritórios, lojas e espaços de trabalho, em horários combinados consigo." },
+  { icon: Building2, title: "Condomínios e Edifícios", text: "Entradas, escadas, elevadores e garagens, com a periodicidade de que o condomínio precisar." },
+  { icon: Sofa, title: "Sofás e Carpetes", text: "Limpeza de sofás e carpetes. Indique o tecido e o tamanho para lhe darmos um preço certo." },
+  { icon: Warehouse, title: "Limpeza de Telhados", text: "Remoção de musgo e sujidade acumulada. Avaliamos cada caso antes de dar orçamento." },
 ];
 
 export function Services() {
   return (
     <section id="servicos" className="py-16 sm:py-24 lg:py-32">
       <Container>
-        <SectionHeading eyebrow="Serviços" title="Uma solução para cada espaço." subtitle="Da sua casa ao escritório, do condomínio ao espaço acabado de remodelar." />
+        <SectionHeading eyebrow="Serviços" title="O que fazemos" subtitle="Cada orçamento é feito à medida do espaço. Escolha o serviço e fale connosco diretamente." />
         <div className="mt-10 grid gap-4 sm:mt-16 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
           {SERVICES.map((s, i) => (
             <Reveal key={s.title} delay={i * 70}>
-              <article className="group flex h-full flex-col rounded-3xl border border-border bg-card p-5 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-elegant sm:p-7">
-                <span className="grid size-14 place-items-center rounded-2xl bg-secondary text-primary transition-colors group-hover:bg-gradient-brand group-hover:text-primary-foreground">
+              <article className="group flex h-full flex-col rounded-2xl border border-border bg-card p-5 transition-colors duration-200 hover:border-primary/40 sm:p-7">
+                <span className="grid size-12 place-items-center rounded-xl bg-secondary text-primary">
                   <s.icon className="size-6" />
                 </span>
                 <h3 className="mt-4 text-lg font-extrabold text-navy sm:mt-6 sm:text-xl">{s.title}</h3>
@@ -189,21 +142,36 @@ export function Services() {
 /* ---------------- BEFORE / AFTER ---------------- */
 type Comparison = { before: string; after: string; label: string };
 // Adicionar apenas fotografias reais de trabalhos da CleanDireto, com autorização.
+// Fotografias tiradas do vídeo enviado pelo Nuno (trabalho real de remoção de bolores).
 const GALLERY: Record<string, Comparison[]> = {
+  "Bolores": [
+    { before: quartoAntes, after: quartoDepois, label: "Teto e paredes de um quarto" },
+    { before: wcCantoAntes, after: wcCantoDepois, label: "Canto de casa de banho" },
+    { before: wcParedeAntes, after: wcParedeDepois, label: "Parede de casa de banho" },
+  ],
   "Domésticas": [], "Pós-obra": [], "Sofás e carpetes": [], "Escritórios": [], "Condomínios": [],
 };
 
 function BeforeAfter({ c }: { c: Comparison }) {
   const [pos, setPos] = useState(50);
   return (
-    <div className="relative aspect-[16/10] overflow-hidden rounded-3xl shadow-elegant select-none">
-      <img src={c.after} alt={`Depois — ${c.label}`} className="absolute inset-0 size-full object-cover" />
-      <div className="absolute inset-0" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}>
-        <img src={c.before} alt={`Antes — ${c.label}`} className="absolute inset-0 size-full object-cover" />
+    <figure>
+      <div className="relative aspect-[3/4] overflow-hidden rounded-2xl bg-muted select-none">
+        <img src={c.after} alt={`Depois: ${c.label}`} width={720} height={960} loading="lazy" className="absolute inset-0 size-full object-cover" />
+        <div className="absolute inset-0" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}>
+          <img src={c.before} alt={`Antes: ${c.label}`} width={720} height={960} loading="lazy" className="absolute inset-0 size-full object-cover" />
+        </div>
+        <span className="pointer-events-none absolute top-3 left-3 rounded-md bg-navy/80 px-2.5 py-1 text-xs font-bold text-white">Antes</span>
+        <span className="pointer-events-none absolute top-3 right-3 rounded-md bg-white px-2.5 py-1 text-xs font-bold text-navy">Depois</span>
+        <div className="pointer-events-none absolute inset-y-0 w-0.5 -translate-x-1/2 bg-white" style={{ left: `${pos}%` }}>
+          <span className="absolute top-1/2 left-1/2 grid size-9 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-white text-navy shadow-soft">
+            <svg viewBox="0 0 24 24" className="size-4" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden><path d="m9 6-6 6 6 6M15 6l6 6-6 6" /></svg>
+          </span>
+        </div>
+        <input type="range" min={0} max={100} value={pos} onChange={(e) => setPos(+e.target.value)} aria-label={`Comparar antes e depois: ${c.label}`} className="absolute inset-0 size-full cursor-ew-resize opacity-0" />
       </div>
-      <div className="absolute inset-y-0 w-0.5 bg-card" style={{ left: `${pos}%` }} />
-      <input type="range" min={0} max={100} value={pos} onChange={(e) => setPos(+e.target.value)} aria-label="Comparar antes e depois" className="absolute inset-0 size-full cursor-ew-resize opacity-0" />
-    </div>
+      <figcaption className="mt-3 text-sm font-semibold text-navy">{c.label}</figcaption>
+    </figure>
   );
 }
 
@@ -220,17 +188,17 @@ function GalleryContent() {
   return (
     <section id="antes-depois" className="bg-muted py-16 sm:py-24 lg:py-32">
       <Container>
-        <SectionHeading eyebrow="Antes & Depois" title="Resultados que fazem a diferença." subtitle="Compare o antes e o depois dos nossos trabalhos, deslizando o controlo sobre cada fotografia." />
-        <Reveal className="mt-12 flex flex-wrap justify-center gap-2">
+        <SectionHeading eyebrow="Trabalhos" title="Antes e depois" subtitle="Fotografias de trabalhos reais. Arraste a linha sobre cada imagem para comparar." />
+        {cats.length > 1 && <Reveal className="mt-12 flex flex-wrap justify-center gap-2">
           {cats.map((c) => (
             <button key={c} onClick={() => setCat(c)} className={cn("rounded-full px-5 py-2.5 text-sm font-bold transition-all", c === cat ? "bg-navy text-navy-foreground shadow-soft" : "bg-card text-navy/70 hover:text-primary")}>
               {c}
             </button>
           ))}
-        </Reveal>
-        <Reveal className="mx-auto mt-10 max-w-4xl">
+        </Reveal>}
+        <Reveal className="mx-auto mt-10 max-w-5xl">
           {items.length ? (
-            <div className="grid gap-6">{items.map((c) => <BeforeAfter key={c.label} c={c} />)}</div>
+            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">{items.map((c) => <BeforeAfter key={c.label} c={c} />)}</div>
           ) : (
             <div className="grid aspect-[16/9] place-items-center rounded-3xl border-2 border-dashed border-primary/25 bg-card p-8 text-center">
               <div>
@@ -247,65 +215,51 @@ function GalleryContent() {
 }
 
 /* ---------------- ABOUT ---------------- */
+const POINTS = [
+  { title: "Fala diretamente connosco", text: "Sem centrais de atendimento. Quem lhe responde é quem organiza o serviço." },
+  { title: "Orçamento antes de começar", text: "Sabe o preço antes de marcarmos. Sem custos escondidos." },
+  { title: "Datas combinadas consigo", text: "Marcamos o dia e a hora que lhe dão jeito, também para empresas." },
+];
 export function About() {
-  const values = ["Atenção ao detalhe", "Confiança", "Organização", "Proximidade", "Compromisso com o cliente"];
   return (
-    <section id="sobre" className="py-16 sm:py-24 lg:py-32">
-      <Container className="grid items-center gap-14 lg:grid-cols-2">
-        <Reveal className="relative">
-          <img src={officeImg} alt="Escritório moderno e impecavelmente limpo" width={1280} height={1280} loading="lazy" className="aspect-square w-full rounded-[2rem] object-cover shadow-elegant" />
-          <div aria-hidden className="absolute -right-4 -bottom-4 -z-10 size-full rounded-[2rem] bg-sky" />
-        </Reveal>
+    <section id="sobre" className="bg-muted py-16 sm:py-24 lg:py-28">
+      <Container className="grid gap-12 lg:grid-cols-[1.15fr_1fr] lg:gap-20">
         <div>
-          <SectionHeading center={false} eyebrow="Sobre a CleanDireto" title="Profissionalismo e dedicação em cada limpeza." />
+          <SectionHeading center={false} eyebrow="Sobre a CleanDireto" title="Uma empresa local, de Coimbra." />
           <Reveal delay={100}>
             <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
-              A CleanDireto é uma empresa de serviços de limpeza com atividade na região de Coimbra. O nosso objetivo é ajudar particulares e empresas a manter os seus espaços limpos, cuidados e agradáveis.
+              A CleanDireto faz limpezas para particulares e empresas em Coimbra e nas localidades à volta. Trabalhamos por marcação, com orçamento prévio, e tratamos cada espaço como se fosse nosso.
             </p>
-            <ul className="mt-8 flex flex-wrap gap-2.5">
-              {values.map((v) => (
-                <li key={v} className="flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-sm font-bold text-navy shadow-soft">
-                  <span className="size-1.5 rounded-full bg-bright" /> {v}
+            <ul className="mt-8 grid gap-5">
+              {POINTS.map((p) => (
+                <li key={p.title} className="flex gap-4">
+                  <span className="mt-0.5 grid size-7 shrink-0 place-items-center rounded-full bg-secondary text-primary"><Check className="size-4" /></span>
+                  <span>
+                    <span className="block font-extrabold text-navy">{p.title}</span>
+                    <span className="mt-0.5 block text-muted-foreground">{p.text}</span>
+                  </span>
                 </li>
               ))}
             </ul>
           </Reveal>
         </div>
-      </Container>
-    </section>
-  );
-}
-
-/* ---------------- WHY ---------------- */
-const WHY = [
-  { icon: HeartHandshake, title: "Atendimento próximo", text: "Compreendemos as necessidades de cada cliente." },
-  { icon: ClipboardList, title: "Serviços personalizados", text: "Procuramos soluções adequadas a diferentes espaços." },
-  { icon: Search, title: "Atenção ao detalhe", text: "Valorizamos um trabalho cuidado e bem executado." },
-  { icon: ShieldCheck, title: "Orçamento sem compromisso", text: "Entre em contacto e explique o serviço de que necessita." },
-];
-export function Why() {
-  return (
-    <section id="porque" className="relative overflow-hidden bg-navy py-24 text-navy-foreground lg:py-32">
-      <div aria-hidden className="absolute -top-32 left-1/2 size-[40rem] -translate-x-1/2 rounded-full bg-bright/25 blur-3xl" />
-      <Container className="relative">
-        <Reveal className="mx-auto max-w-2xl text-center">
-          <p className="text-xs font-bold uppercase tracking-[0.22em] text-sky">A nossa diferença</p>
-          <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">Porquê escolher a <span className="font-serif font-normal italic">CleanDireto?</span></h2>
+        <Reveal delay={150}>
+          <div className="rounded-3xl border border-border bg-card p-6 sm:p-8">
+            <p className="text-sm font-bold text-navy">O nosso percurso</p>
+            <ol className="mt-6">
+              {JOURNEY.map((j, i) => (
+                <li key={j.year} className="relative grid grid-cols-[5rem_1fr] gap-3 pb-7 last:pb-0">
+                  {i < JOURNEY.length - 1 && <span aria-hidden className="absolute top-4 bottom-0 left-[0.3rem] w-px bg-border" />}
+                  <span className="relative flex items-start gap-3">
+                    <span className="mt-2.5 size-2.5 shrink-0 rounded-full bg-bright ring-4 ring-secondary" />
+                    <span className="text-xl font-extrabold text-navy">{j.year}</span>
+                  </span>
+                  <span className="pt-1 leading-relaxed text-muted-foreground">{j.text}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
         </Reveal>
-        <div className="mt-10 grid grid-cols-2 gap-3 sm:mt-16 sm:gap-5 lg:grid-cols-4">
-          {WHY.map((w, i) => (
-            <Reveal key={w.title} delay={i * 80}>
-              <div className="h-full rounded-3xl border border-navy-foreground/10 bg-navy-foreground/5 p-4 text-center backdrop-blur transition-colors hover:bg-navy-foreground/10 sm:p-7">
-                <span className="relative mx-auto grid size-16 place-items-center rounded-full bg-card text-primary shadow-elegant sm:size-20">
-                  <span aria-hidden className="absolute inset-1.5 rounded-full border-2 border-dashed border-sky/60" />
-                  <w.icon className="relative size-6 sm:size-8" />
-                </span>
-                <h3 className="mt-4 text-sm font-extrabold uppercase leading-snug tracking-[0.12em] text-sky sm:mt-6 sm:text-base">{w.title}</h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-navy-foreground/70 sm:mt-2 sm:text-base">{w.text}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
       </Container>
     </section>
   );
@@ -313,24 +267,24 @@ export function Why() {
 
 /* ---------------- PROCESS ---------------- */
 const STEPS = [
-  { icon: MessageCircle, title: "Entre em contacto", text: "Explique o serviço de limpeza de que necessita." },
-  { icon: ClipboardList, title: "Peça um orçamento", text: "Avaliamos as necessidades e apresentamos uma proposta." },
-  { icon: CalendarCheck, title: "Combine o serviço", text: "Defina a data e os detalhes diretamente com a equipa." },
-  { icon: Sparkles, title: "Desfrute do seu espaço", text: "A CleanDireto realiza o serviço combinado." },
+  { icon: MessageCircle, title: "Fale connosco", text: "Pelo formulário, WhatsApp ou telefone. Fotografias do espaço ajudam." },
+  { icon: ClipboardList, title: "Receba o orçamento", text: "Enviamos o preço, em média em 10 horas. Se for preciso, vamos ver o local." },
+  { icon: CalendarCheck, title: "Marque a data", text: "Escolhe o dia e a hora que lhe dão mais jeito." },
+  { icon: Sparkles, title: "Serviço feito", text: "Fazemos a limpeza no dia combinado e confirmamos consigo no fim." },
 ];
 export function Process() {
   return (
     <section id="processo" className="py-16 sm:py-24 lg:py-32">
       <Container>
-        <SectionHeading eyebrow="Como funciona" title="Simples, do primeiro contacto ao espaço limpo." />
+        <SectionHeading eyebrow="Como funciona" title="Do pedido à limpeza, em 4 passos" />
         <ol className="relative mt-10 grid gap-5 sm:mt-16 md:grid-cols-4 md:gap-6">
           <div aria-hidden className="absolute top-8 right-[12%] left-[12%] hidden h-px bg-border md:block" />
           {STEPS.map((s, i) => (
             <Reveal key={s.title} delay={i * 100}>
               <li className="relative flex items-start gap-4 md:block md:text-center">
-                <span className="relative grid size-12 shrink-0 place-items-center rounded-2xl bg-gradient-brand text-primary-foreground shadow-elegant md:mx-auto md:size-16"><s.icon className="size-5 md:size-6" /></span>
+                <span className="relative grid size-12 shrink-0 place-items-center rounded-xl border border-border bg-card text-primary md:mx-auto md:size-16"><s.icon className="size-5 md:size-6" /></span>
                 <div>
-                  <p className="font-serif text-2xl leading-none italic text-bright md:mt-6 md:text-3xl">0{i + 1}</p>
+                  <p className="text-xs font-bold uppercase tracking-wider text-bright md:mt-5">Passo {i + 1}</p>
                   <h3 className="mt-1 text-base font-extrabold text-navy md:text-lg">{s.title}</h3>
                   <p className="mt-1 text-sm leading-relaxed text-muted-foreground md:mx-auto md:mt-2 md:max-w-xs md:text-base">{s.text}</p>
                 </div>
@@ -348,10 +302,10 @@ export function Process() {
 const VIDEO = { src: "/videos/limpeza-bolores.mp4", poster: "/videos/limpeza-bolores-poster.jpg", title: "Limpeza de bolores" };
 export function Video() {
   return (
-    <section id="video" className="bg-muted py-16 sm:py-24 lg:py-32">
+    <section id="video" className="py-16 sm:py-24 lg:py-32">
       <Container className="grid items-center gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
         <div>
-          <SectionHeading center={false} eyebrow="Trabalho real" title="Veja a diferença em vídeo." subtitle="Um trabalho real da CleanDireto: limpeza de bolores num quarto, do teto às paredes." />
+          <SectionHeading center={false} eyebrow="Em vídeo" title="Remoção de bolores, do início ao fim" subtitle="Um trabalho real da CleanDireto: bolores no teto e nas paredes de um quarto e de uma casa de banho." />
           <Reveal delay={100}>
             <ul className="mt-8 grid gap-3">
               {["Remoção de bolores e manchas de humidade", "Tetos, paredes e cantos difíceis", "Produtos adequados a cada superfície"].map((t) => (
@@ -381,10 +335,10 @@ export function Video() {
 const ZONES = ["Coimbra", "Condeixa-a-Nova", "Lousã"];
 export function Zones() {
   return (
-    <section id="zonas" className="py-16 sm:py-24 lg:py-32">
+    <section id="zonas" className="bg-muted py-16 sm:py-24 lg:py-32">
       <Container className="grid gap-10 lg:grid-cols-[1fr_1.15fr] lg:items-center lg:gap-14">
         <div>
-          <SectionHeading center={false} eyebrow="Zonas de atuação" title="Coimbra e arredores." subtitle="Estamos perto de si para limpezas em casas, empresas e condomínios." />
+          <SectionHeading center={false} eyebrow="Zonas de atuação" title="Coimbra e arredores." subtitle="Trabalhamos sobretudo nestas localidades, mas deslocamo-nos a outras zonas perto de Coimbra." />
           <Reveal delay={100}>
             <ul className="mt-8 flex flex-wrap gap-3">
               {ZONES.map((z) => (
@@ -435,14 +389,14 @@ export function QuoteSection() {
     <section id="orcamento" className="bg-gradient-soft py-16 sm:py-24 lg:py-32">
       <Container className="grid gap-12 lg:grid-cols-[1fr_1.15fr]">
         <div>
-          <SectionHeading center={false} eyebrow="Pedir orçamento" title="O seu espaço merece o melhor cuidado." subtitle="Conte-nos o que precisa e solicite o seu orçamento sem compromisso." />
+          <SectionHeading center={false} eyebrow="Orçamento gratuito" title="Peça o seu orçamento" subtitle="Preencha o formulário e envie por WhatsApp ou SMS. Respondemos em média em 10 horas." />
           <Reveal delay={100} className="mt-10 grid gap-3">
             {[
               { href: whatsappLink(DEFAULT_WA_MESSAGE), icon: MessageCircle, label: "WhatsApp", value: PHONE_DISPLAY, ext: true },
               { href: PHONE_TEL, icon: Phone, label: "Telefone", value: PHONE_DISPLAY },
               { href: FACEBOOK_URL, icon: Facebook, label: "Facebook", value: "CleanDireto", ext: true },
             ].map((c) => (
-              <a key={c.label} href={c.href} {...(c.ext ? { target: "_blank", rel: "noopener noreferrer" } : {})} className="group flex items-center gap-4 rounded-2xl border border-border bg-card p-4 shadow-soft transition-all hover:-translate-y-0.5 hover:border-primary/40">
+              <a key={c.label} href={c.href} {...(c.ext ? { target: "_blank", rel: "noopener noreferrer" } : {})} className="group flex items-center gap-4 rounded-xl border border-border bg-card p-4 transition-colors hover:border-primary/40">
                 <span className="grid size-12 place-items-center rounded-xl bg-secondary text-primary"><c.icon className="size-5" /></span>
                 <span className="flex-1">
                   <span className="block text-xs font-bold uppercase tracking-wider text-muted-foreground">{c.label}</span>
@@ -454,7 +408,7 @@ export function QuoteSection() {
           </Reveal>
         </div>
         <Reveal delay={150}>
-          <form onSubmit={submit} className="rounded-[2rem] border border-border bg-card p-6 shadow-elegant sm:p-9">
+          <form onSubmit={submit} className="rounded-2xl border border-border bg-card p-6 shadow-soft sm:p-9">
             <div className="grid gap-5 sm:grid-cols-2">
               <label className="grid gap-2 text-sm font-bold text-navy">Nome<input required maxLength={80} value={d.nome} onChange={set("nome")} className={field} placeholder="O seu nome" autoComplete="name" /></label>
               <label className="grid gap-2 text-sm font-bold text-navy">Telefone<input required type="tel" inputMode="tel" maxLength={30} value={d.contacto} onChange={set("contacto")} className={field} placeholder="O seu número" autoComplete="tel" /></label>
@@ -534,11 +488,11 @@ export function Faq() {
   return (
     <section id="faq" className="bg-muted py-16 sm:py-24 lg:py-32">
       <Container className="max-w-3xl">
-        <SectionHeading eyebrow="Perguntas frequentes" title="Tem dúvidas? Nós ajudamos." />
+        <SectionHeading eyebrow="FAQ" title="Perguntas frequentes" />
         <Reveal className="mt-12">
           <Accordion type="single" collapsible className="grid gap-3">
             {FAQ.map((f, i) => (
-              <AccordionItem key={f.q} value={`i${i}`} className="rounded-2xl border border-border bg-card px-6 shadow-soft">
+              <AccordionItem key={f.q} value={`i${i}`} className="rounded-xl border border-border bg-card px-5 sm:px-6">
                 <AccordionTrigger className="py-5 text-left text-base font-extrabold text-navy hover:no-underline">{f.q}</AccordionTrigger>
                 <AccordionContent className="pb-5 text-base leading-relaxed text-muted-foreground">{f.a}</AccordionContent>
               </AccordionItem>
@@ -554,13 +508,10 @@ export function Faq() {
 export function FinalCta() {
   return (
     <section className="px-4 py-16 sm:px-6 sm:py-24">
-      <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[2rem] bg-navy px-6 py-12 text-center text-navy-foreground shadow-elegant sm:px-12 sm:py-16">
-        <div aria-hidden className="pointer-events-none absolute -top-24 left-1/2 size-[32rem] -translate-x-1/2 rounded-full bg-bright/30 blur-3xl" />
+      <div className="relative mx-auto max-w-6xl overflow-hidden rounded-3xl bg-navy px-6 py-12 text-center text-navy-foreground sm:px-12 sm:py-16">
         <div className="relative">
-          <h2 className="text-3xl font-extrabold tracking-tight text-balance sm:text-4xl lg:text-5xl">
-            O seu espaço impecável, <span className="font-serif font-normal italic">sem complicações.</span>
-          </h2>
-          <p className="mx-auto mt-4 max-w-xl text-navy-foreground/75 sm:text-lg">Fale connosco e receba um orçamento sem compromisso.</p>
+          <h2 className="text-3xl font-extrabold tracking-tight text-balance sm:text-4xl">Precisa de uma limpeza em Coimbra?</h2>
+          <p className="mx-auto mt-4 max-w-xl text-navy-foreground/75 sm:text-lg">Envie-nos uma mensagem com o que precisa. O orçamento é gratuito.</p>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <Button asChild variant="whatsapp" size="xl"><a href={whatsappLink(DEFAULT_WA_MESSAGE)} target="_blank" rel="noopener noreferrer"><MessageCircle /> Falar no WhatsApp</a></Button>
             <Button asChild variant="soft" size="xl"><a href={PHONE_TEL}><Phone /> Ligar {PHONE_DISPLAY}</a></Button>

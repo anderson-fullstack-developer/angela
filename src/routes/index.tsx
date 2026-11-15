@@ -5,7 +5,7 @@ import { DemoLocked } from "@/components/DemoLocked";
 const DEMO_LOCKED = false;
 import { Header } from "@/components/site/Header";
 import {
-  About, Faq, FinalCta, Footer, Gallery, Hero, Journey, Process, Stats, QuoteSection, Services, Testimonials, TrustStrip, Video, WhatsAppFab, Why, Zones,
+  About, Faq, FinalCta, Footer, Gallery, Hero, Process, Stats, QuoteSection, Services, Testimonials, Video, WhatsAppFab, Zones,
 } from "@/components/site/Sections";
 
 const SITE_URL = "https://cleandireto.vercel.app"; // endereço grátis; mudar quando houver cleandireto.com
@@ -67,15 +67,12 @@ function Index() {
       <Header />
       <main>
         <Hero />
-        <TrustStrip />
         <Stats />
-        <Journey />
         <Services />
         <Gallery />
-        <About />
-        <Why />
-        <Process />
         <Video />
+        <About />
+        <Process />
         <Zones />
         <QuoteSection />
         <Testimonials />
