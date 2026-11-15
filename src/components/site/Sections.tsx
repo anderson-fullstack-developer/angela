@@ -199,23 +199,59 @@ const GALLERY: Record<string, Comparison[]> = {
   "Domésticas": [], "Pós-obra": [], "Sofás e carpetes": [], "Escritórios": [], "Condomínios": [],
 };
 
+// Comparador antes/depois.
+// Telemóvel: deslizar na foto passa para a seguinte (carrossel); arrastar a pega redonda compara; tocar move a linha.
+// Rato: arrastar em qualquer ponto da foto. Teclado: setas no controlo (input range escondido).
 function BeforeAfter({ c }: { c: Comparison }) {
   const [pos, setPos] = useState(50);
+  const box = useRef<HTMLDivElement>(null);
+  const dragging = useRef(false);
+  const pointer = useRef("mouse");
+  const handle = useRef<HTMLSpanElement>(null);
+  // Listener nativo não-passivo: impede que o arrastar da pega faça deslizar o carrossel/página (iOS e Android).
+  useEffect(() => {
+    const el = handle.current;
+    if (!el) return;
+    const block = (e: TouchEvent) => e.preventDefault();
+    el.addEventListener("touchstart", block, { passive: false });
+    el.addEventListener("touchmove", block, { passive: false });
+    return () => { el.removeEventListener("touchstart", block); el.removeEventListener("touchmove", block); };
+  }, []);
+  const moveTo = (x: number) => {
+    const r = box.current?.getBoundingClientRect();
+    if (r) setPos(Math.min(100, Math.max(0, ((x - r.left) / r.width) * 100)));
+  };
+  const startDrag = (e: React.PointerEvent<HTMLElement>) => {
+    dragging.current = true;
+    e.currentTarget.setPointerCapture(e.pointerId);
+    moveTo(e.clientX);
+  };
+  const drag = (e: React.PointerEvent) => { if (dragging.current) moveTo(e.clientX); };
+  const stop = () => { dragging.current = false; };
   return (
     <figure>
-      <div className="relative aspect-[3/4] touch-pan-y overflow-hidden rounded-2xl bg-muted select-none">
-        <img src={c.after} alt={`Depois: ${c.label}`} width={720} height={960} loading="lazy" className="absolute inset-0 size-full object-cover" />
+      <div ref={box}
+        className="relative aspect-[3/4] overflow-hidden rounded-2xl bg-muted select-none md:cursor-ew-resize"
+        onPointerDown={(e) => { pointer.current = e.pointerType; if (e.pointerType === "mouse") startDrag(e); }}
+        onPointerMove={drag} onPointerUp={stop} onPointerCancel={stop}
+        onClick={(e) => { if (pointer.current !== "mouse") moveTo(e.clientX); }}>
+        <img src={c.after} alt={`Depois: ${c.label}`} width={720} height={960} loading="lazy" draggable={false} className="absolute inset-0 size-full object-cover" />
         <div className="absolute inset-0" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}>
-          <img src={c.before} alt={`Antes: ${c.label}`} width={720} height={960} loading="lazy" className="absolute inset-0 size-full object-cover" />
+          <img src={c.before} alt={`Antes: ${c.label}`} width={720} height={960} loading="lazy" draggable={false} className="absolute inset-0 size-full object-cover" />
         </div>
         <span className="pointer-events-none absolute top-3 left-3 rounded-md bg-navy/80 px-2.5 py-1 text-xs font-bold text-white">Antes</span>
         <span className="pointer-events-none absolute top-3 right-3 rounded-md bg-white px-2.5 py-1 text-xs font-bold text-navy">Depois</span>
-        <div className="pointer-events-none absolute inset-y-0 w-0.5 -translate-x-1/2 bg-white" style={{ left: `${pos}%` }}>
-          <span className="absolute top-1/2 left-1/2 grid size-9 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-white text-navy shadow-soft">
-            <svg viewBox="0 0 24 24" className="size-4" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden><path d="m9 6-6 6 6 6M15 6l6 6-6 6" /></svg>
+        <input type="range" min={0} max={100} value={Math.round(pos)} onChange={(e) => setPos(+e.target.value)}
+          aria-label={`Comparar antes e depois: ${c.label}`} className="peer sr-only" />
+        <div className="pointer-events-none absolute inset-y-0 w-0.5 -translate-x-1/2 bg-white peer-focus-visible:[&>span]:ring-4 peer-focus-visible:[&>span]:ring-primary/40" style={{ left: `${pos}%` }}>
+          <span aria-hidden ref={handle}
+            className="pointer-events-auto absolute top-1/2 left-1/2 grid size-11 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize touch-none place-items-center rounded-full bg-white text-navy shadow-elegant"
+            onPointerDown={(e) => { e.stopPropagation(); pointer.current = e.pointerType; startDrag(e); }}
+            onPointerMove={drag} onPointerUp={stop} onPointerCancel={stop}
+            onClick={(e) => e.stopPropagation()}>
+            <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden><path d="m9 6-6 6 6 6M15 6l6 6-6 6" /></svg>
           </span>
         </div>
-        <input type="range" min={0} max={100} value={pos} onChange={(e) => setPos(+e.target.value)} aria-label={`Comparar antes e depois: ${c.label}`} className="absolute inset-0 size-full cursor-ew-resize opacity-0" />
       </div>
       <figcaption className="mt-3 text-sm font-semibold text-navy">{c.label}</figcaption>
     </figure>
@@ -235,7 +271,7 @@ function GalleryContent() {
   return (
     <section id="antes-depois" className="bg-muted py-14 sm:py-20 lg:py-28">
       <Container>
-        <SectionHeading eyebrow="Trabalhos reais" title="Antes e depois" subtitle="Arraste a linha para comparar." />
+        <SectionHeading eyebrow="Trabalhos reais" title="Antes e depois" subtitle="Arraste o círculo para comparar." />
         {cats.length > 1 && <Reveal className="mt-12 flex flex-wrap justify-center gap-2">
           {cats.map((c) => (
             <button key={c} onClick={() => setCat(c)} className={cn("rounded-full px-5 py-2.5 text-sm font-bold transition-all", c === cat ? "bg-navy text-navy-foreground shadow-soft" : "bg-card text-navy/70 hover:text-primary")}>
