@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { DemoLocked } from "@/components/DemoLocked";
 
 // Demonstração desativada até o cliente ativar o website. Mudar para false para voltar a mostrar o site.
-const DEMO_LOCKED = true;
+const DEMO_LOCKED = false;
 import { Header } from "@/components/site/Header";
 import {
   About, Faq, FinalCta, Footer, Gallery, Hero, Process, QuoteSection, Services, Testimonials, TrustStrip, Video, WhatsAppFab, Why, Zones,
