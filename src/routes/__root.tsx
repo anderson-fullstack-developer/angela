@@ -82,7 +82,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "CleanDireto | Limpeza Profissional em Coimbra" },
-      { name: "description", content: "Serviços de limpeza profissional em Coimbra e Região Centro." },
+      { name: "description", content: "Serviços de limpeza profissional em Coimbra e arredores." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "theme-color", content: "#1f3a8a" },

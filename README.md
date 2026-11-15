@@ -6,18 +6,19 @@
 
 **Website for CleanDireto**, a professional cleaning company in Coimbra, Portugal: home, post-construction, office, condominium, sofa/carpet and roof cleaning.
 
-> Status: personalised demo for client approval. The page is set to `noindex` until the client approves it. Services and service areas are still to be confirmed by the client; no statistics, awards or testimonials are shown until real ones are provided.
+> Status: final version approved by the client (November 2026). No statistics, awards or testimonials are shown until real ones are provided.
 
 ## What the site includes
 
 - **Services** in cards, each with a button that opens WhatsApp with the request already written
 - **About**, **why us** and a four-step **how it works** section
-- **Video** section (illustrative for now, ready for the client's own video)
-- **Service area** with a Google map of the Coimbra region and the list of towns
-- **Quote form** that validates the details and sends an organised message by **WhatsApp or SMS** (no server, no data stored)
+- **Video** of real work (mould removal) in a vertical player with poster, loaded only on play
+- **Service area**: Coimbra and surroundings (Condeixa-a-Nova, Lousã) with a Google map
+- **Quote form** (name, phone, email, town, service, urgency, details) sent by **WhatsApp or SMS**, with optional logging to the client's Google Sheet ([setup](docs/google-sheets.md))
 - **FAQ**, floating WhatsApp button, phone and Facebook links
 - Before/after gallery and testimonials that appear automatically once real photos and reviews are added
-- SEO for Coimbra: canonical URL, structured data (LocalBusiness), sitemap, robots.txt, favicon set and a 1200×630 share image
+- Official logo in header and footer, favicon set from the logo
+- SEO for Coimbra: canonical URL, structured data (LocalBusiness), sitemap, robots.txt and a 1200×630 share image
 
 ## Tech stack
 

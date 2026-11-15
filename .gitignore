@@ -33,3 +33,6 @@ dist-ssr
 
 .netlify
 .vercel
+
+# materiais enviados pelo cliente (já integrados no projeto)
+finalizarcleandireto/

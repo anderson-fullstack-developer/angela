@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Menu, MessageCircle, Phone, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import markUrl from "@/assets/cleandireto-mark.webp";
+import lockupUrl from "@/assets/cleandireto-lockup.webp";
 import { DEFAULT_WA_MESSAGE, PHONE_DISPLAY, PHONE_TEL, whatsappLink } from "@/lib/contact";
 
 export const NAV = [
@@ -16,11 +16,8 @@ export const NAV = [
 export function Logo({ light = false }: { light?: boolean }) {
   return (
     <a href="#top" className="flex items-center gap-3" aria-label="CleanDireto — início">
-      <img src={markUrl} alt="" width={44} height={44} className="size-11 rounded-xl shadow-soft" />
-      <span className="leading-none">
-        <span className={cn("block text-lg font-extrabold tracking-tight", light ? "text-navy-foreground" : "text-navy")}>CleanDireto</span>
-        <span className={cn("mt-1 block text-[10px] font-semibold uppercase tracking-[0.28em]", light ? "text-navy-foreground/60" : "text-muted-foreground")}>Limpezas</span>
-      </span>
+      {/* Logótipo oficial da CleanDireto (gota + "CLEANDIRETO LIMPEZAS") */}
+      <img src={lockupUrl} alt="CleanDireto Limpezas" width={238} height={44} className={cn("h-10 w-auto sm:h-11", light && "rounded-lg bg-white px-2 py-1")} />
     </a>
   );
 }

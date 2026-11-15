@@ -11,9 +11,9 @@ import {
 const SITE_URL = "https://cleandireto.vercel.app"; // endereço grátis; mudar quando houver cleandireto.com
 const TITLE = "CleanDireto | Limpezas Profissionais em Coimbra";
 const DESC =
-  "Limpeza doméstica, pós-obra, escritórios e condomínios em Coimbra e Região Centro. Peça o seu orçamento sem compromisso por WhatsApp.";
+  "Limpeza doméstica, pós-obra, bolores, escritórios e condomínios em Coimbra e arredores. Peça o seu orçamento sem compromisso por WhatsApp.";
 const SHARE_TITLE = "CleanDireto | O seu espaço impecável";
-const SHARE_DESC = "Limpezas profissionais em Coimbra e Região Centro. Peça o seu orçamento sem compromisso!";
+const SHARE_DESC = "Limpezas profissionais em Coimbra e arredores. Peça o seu orçamento sem compromisso!";
 
 const localBusiness = {
   "@context": "https://schema.org",
@@ -25,7 +25,7 @@ const localBusiness = {
   image: `${SITE_URL}/og-share.jpg`,
   logo: `${SITE_URL}/favicon-512x512.png`,
   telephone: "+351932929914",
-  areaServed: { "@type": "AdministrativeArea", name: "Coimbra e Região Centro, Portugal" },
+  areaServed: [{ "@type": "City", name: "Coimbra" }, { "@type": "City", name: "Condeixa-a-Nova" }, { "@type": "City", name: "Lousã" }],
   address: { "@type": "PostalAddress", addressLocality: "Coimbra", addressCountry: "PT" },
   sameAs: ["https://www.facebook.com/share/1E9kHucCe5/"],
 };
@@ -36,7 +36,7 @@ export const Route = createFileRoute("/")({
       { title: TITLE },
       { name: "description", content: DESC },
       // Demonstração: não indexar até o cliente aprovar (depois mudar para "index, follow").
-      { name: "robots", content: "noindex, nofollow" },
+      { name: "robots", content: "index, follow, max-image-preview:large" },
       { property: "og:title", content: SHARE_TITLE },
       { property: "og:description", content: SHARE_DESC },
       { property: "og:type", content: "website" },

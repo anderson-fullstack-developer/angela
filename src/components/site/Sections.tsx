@@ -6,12 +6,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Reveal, SectionHeading } from "./Reveal";
-import { Logo, NAV } from "./Header";
+import { NAV } from "./Header";
+import logoUrl from "@/assets/cleandireto-logo.webp";
 import { cn } from "@/lib/utils";
 import heroImg from "@/assets/hero-interior.jpg";
 import officeImg from "@/assets/office-clean.jpg";
 import {
-  DEFAULT_WA_MESSAGE, FACEBOOK_URL, PHONE_DISPLAY, PHONE_TEL, buildQuoteMessage, whatsappLink,
+  DEFAULT_WA_MESSAGE, FACEBOOK_URL, PHONE_DISPLAY, PHONE_TEL, SHEET_URL, URGENCY_OPTIONS, buildQuoteMessage, saveQuoteToSheet, whatsappLink, type QuoteData,
 } from "@/lib/contact";
 
 const Container = ({ className, children }: { className?: string; children: React.ReactNode }) => (
@@ -26,7 +27,7 @@ export function Hero() {
       <Container className="relative grid items-center gap-14 lg:grid-cols-[1.05fr_1fr]">
         <Reveal>
           <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-primary shadow-soft">
-            <MapPin className="size-3.5" /> Coimbra e Região Centro
+            <MapPin className="size-3.5" /> Coimbra e arredores
           </span>
           <h1 className="mt-7 text-4xl font-extrabold leading-[1.05] tracking-tight text-navy sm:text-5xl lg:text-[3.6rem] text-balance">
             Espaços impecáveis, <span className="font-serif font-normal italic text-gradient-brand">com cuidado em cada detalhe.</span>
@@ -67,7 +68,7 @@ export function Hero() {
 const TRUST = [
   { icon: ShieldCheck, title: "Orçamento gratuito", text: "Sem compromisso" },
   { icon: MessageCircle, title: "Resposta por WhatsApp", text: "Contacto direto e rápido" },
-  { icon: MapPin, title: "Coimbra e Região Centro", text: "Vamos até si" },
+  { icon: MapPin, title: "Coimbra e arredores", text: "Vamos até si" },
   { icon: Building2, title: "Particulares e empresas", text: "Casas, escritórios e condomínios" },
 ];
 export function TrustStrip() {
@@ -234,9 +235,12 @@ export function Why() {
         <div className="mt-10 grid grid-cols-2 gap-3 sm:mt-16 sm:gap-5 lg:grid-cols-4">
           {WHY.map((w, i) => (
             <Reveal key={w.title} delay={i * 80}>
-              <div className="h-full rounded-3xl border border-navy-foreground/10 bg-navy-foreground/5 p-4 backdrop-blur sm:p-7 transition-colors hover:bg-navy-foreground/10">
-                <w.icon className="size-6 text-sky sm:size-8" />
-                <h3 className="mt-3 text-base font-extrabold leading-snug sm:mt-6 sm:text-lg">{w.title}</h3>
+              <div className="h-full rounded-3xl border border-navy-foreground/10 bg-navy-foreground/5 p-4 text-center backdrop-blur transition-colors hover:bg-navy-foreground/10 sm:p-7">
+                <span className="relative mx-auto grid size-16 place-items-center rounded-full bg-card text-primary shadow-elegant sm:size-20">
+                  <span aria-hidden className="absolute inset-1.5 rounded-full border-2 border-dashed border-sky/60" />
+                  <w.icon className="relative size-6 sm:size-8" />
+                </span>
+                <h3 className="mt-4 text-sm font-extrabold uppercase leading-snug tracking-[0.12em] text-sky sm:mt-6 sm:text-base">{w.title}</h3>
                 <p className="mt-1.5 text-sm leading-relaxed text-navy-foreground/70 sm:mt-2 sm:text-base">{w.text}</p>
               </div>
             </Reveal>
@@ -280,27 +284,33 @@ export function Process() {
 }
 
 /* ---------------- VIDEO ---------------- */
-// Espaço reservado para o vídeo real da CleanDireto: importar o ficheiro e colocar aqui o URL (ex.: import video from "@/assets/apresentacao.mp4").
-const VIDEO_URL: string | null = null;
+// Vídeo real enviado pelo cliente (limpeza de bolores). Vertical, H.264, só carrega quando se carrega em Play.
+const VIDEO = { src: "/videos/limpeza-bolores.mp4", poster: "/videos/limpeza-bolores-poster.jpg", title: "Limpeza de bolores" };
 export function Video() {
-  const [playing, setPlaying] = useState(false);
   return (
     <section id="video" className="bg-muted py-16 sm:py-24 lg:py-32">
-      <Container>
-        <SectionHeading eyebrow="Vídeo" title="Espaços limpos, vidas mais leves." subtitle="Em breve, um vídeo de apresentação dos trabalhos da CleanDireto." />
-        <Reveal className="relative mx-auto mt-12 max-w-5xl overflow-hidden rounded-[2rem] shadow-elegant">
-          {playing && VIDEO_URL ? (
-            <video src={VIDEO_URL} controls autoPlay playsInline preload="metadata" className="aspect-video w-full bg-navy" />
-          ) : (
-            <button type="button" disabled={!VIDEO_URL} onClick={() => setPlaying(true)} className="group relative block aspect-video w-full disabled:cursor-default" aria-label={VIDEO_URL ? "Reproduzir vídeo" : "Vídeo em preparação"}>
-              <img src={heroImg} alt="" loading="lazy" className="absolute inset-0 size-full object-cover" />
-              <span className="absolute inset-0 bg-navy/45" />
-              <span className="relative flex flex-col items-center gap-4">
-                <span className="grid size-20 place-items-center rounded-full bg-card text-primary shadow-elegant transition-transform group-enabled:group-hover:scale-110">{VIDEO_URL ? <Play className="ml-1 size-8 fill-current" /> : <VideoIcon className="size-8" />}</span>
-                <span className="rounded-full bg-navy/60 px-4 py-1.5 text-sm font-bold text-navy-foreground">{VIDEO_URL ? "Ver vídeo" : "Vídeo de apresentação em breve"}</span>
-              </span>
-            </button>
-          )}
+      <Container className="grid items-center gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
+        <div>
+          <SectionHeading center={false} eyebrow="Trabalho real" title="Veja a diferença em vídeo." subtitle="Um trabalho real da CleanDireto: limpeza de bolores num quarto, do teto às paredes." />
+          <Reveal delay={100}>
+            <ul className="mt-8 grid gap-3">
+              {["Remoção de bolores e manchas de humidade", "Tetos, paredes e cantos difíceis", "Produtos adequados a cada superfície"].map((t) => (
+                <li key={t} className="flex items-center gap-3 font-semibold text-navy"><Check className="size-5 shrink-0 text-bright" /> {t}</li>
+              ))}
+            </ul>
+            <Button asChild variant="hero" size="xl" className="mt-8">
+              <a href={whatsappLink("Olá CleanDireto! Gostaria de pedir um orçamento para limpeza de bolores.")} target="_blank" rel="noopener noreferrer"><MessageCircle /> Pedir orçamento para bolores</a>
+            </Button>
+          </Reveal>
+        </div>
+        <Reveal delay={150} className="mx-auto w-full max-w-[340px]">
+          <div className="rounded-[2.4rem] bg-navy p-2.5 shadow-elegant">
+            <video controls playsInline preload="none" poster={VIDEO.poster} className="block aspect-[9/16] w-full rounded-[1.9rem] bg-navy object-cover" aria-label={`Vídeo: ${VIDEO.title}`}>
+              <source src={VIDEO.src} type="video/mp4" />
+              O seu navegador não consegue reproduzir este vídeo.
+            </video>
+          </div>
+          <p className="mt-3 text-center text-sm text-muted-foreground">{VIDEO.title} · trabalho real da CleanDireto</p>
         </Reveal>
       </Container>
     </section>
@@ -308,32 +318,34 @@ export function Video() {
 }
 
 /* ---------------- ZONES ---------------- */
-const ZONES = ["Coimbra", "Condeixa-a-Nova", "Montemor-o-Velho", "Figueira da Foz", "Cantanhede", "Penacova", "Soure", "Miranda do Corvo", "Lousã", "Mealhada"];
+const ZONES = ["Coimbra", "Condeixa-a-Nova", "Lousã"];
 export function Zones() {
   return (
     <section id="zonas" className="py-16 sm:py-24 lg:py-32">
-      <Container className="grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:items-center">
+      <Container className="grid gap-10 lg:grid-cols-[1fr_1.15fr] lg:items-center lg:gap-14">
         <div>
-          <SectionHeading center={false} eyebrow="Zonas de atuação" title="A CleanDireto perto de si." subtitle="Coimbra e Região Centro." />
-          <Reveal delay={100} className="mt-8 rounded-3xl bg-secondary p-6">
-            <p className="font-semibold text-navy">Não encontra a sua localidade? Contacte-nos para confirmar disponibilidade.</p>
-            <Button asChild variant="whatsapp" size="lg" className="mt-5">
-              <a href={whatsappLink("Olá CleanDireto! Gostaria de confirmar se trabalham na minha localidade: ")} target="_blank" rel="noopener noreferrer"><MessageCircle /> Perguntar no WhatsApp</a>
-            </Button>
+          <SectionHeading center={false} eyebrow="Zonas de atuação" title="Coimbra e arredores." subtitle="Estamos perto de si para limpezas em casas, empresas e condomínios." />
+          <Reveal delay={100}>
+            <ul className="mt-8 flex flex-wrap gap-3">
+              {ZONES.map((z) => (
+                <li key={z} className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-3 font-bold text-navy shadow-soft">
+                  <MapPin className="size-4 text-bright" /> {z}
+                </li>
+              ))}
+            </ul>
+            <div className="mt-8 rounded-3xl bg-secondary p-6">
+              <p className="font-semibold text-navy">Não encontra a sua localidade? Fale connosco para confirmar disponibilidade.</p>
+              <Button asChild variant="whatsapp" size="lg" className="mt-5">
+                <a href={whatsappLink("Olá CleanDireto! Gostaria de confirmar se trabalham na minha localidade: ")} target="_blank" rel="noopener noreferrer"><MessageCircle /> Perguntar no WhatsApp</a>
+              </Button>
+            </div>
           </Reveal>
         </div>
-        <Reveal delay={150} className="grid gap-5">
+        <Reveal delay={150}>
           <div className="overflow-hidden rounded-3xl border border-border shadow-soft">
-            <iframe src="https://maps.google.com/maps?ll=40.2,-8.55&z=9&output=embed" title="Mapa da região de Coimbra" loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade" className="block aspect-[16/10] w-full border-0" />
+            <iframe src="https://maps.google.com/maps?ll=40.17,-8.38&z=10&output=embed" title="Mapa de Coimbra e arredores" loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade" className="block aspect-[4/3] w-full border-0" />
           </div>
-          <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-            {ZONES.map((z, i) => (
-              <li key={z} className={cn("flex items-center gap-2.5 rounded-2xl border border-border bg-card px-4 py-4 font-bold text-navy shadow-soft", i === 0 && "bg-gradient-brand text-primary-foreground border-transparent")}>
-                <MapPin className={cn("size-4 shrink-0", i === 0 ? "" : "text-bright")} /> {z}
-              </li>
-            ))}
-          </ul>
         </Reveal>
       </Container>
     </section>
@@ -343,10 +355,11 @@ export function Zones() {
 /* ---------------- QUOTE ---------------- */
 const field = "w-full rounded-xl border border-input bg-background px-4 py-3 text-base text-foreground placeholder:text-muted-foreground/70 outline-none transition focus:border-primary focus:ring-4 focus:ring-primary/10";
 export function QuoteSection() {
-  const [d, setD] = useState({ nome: "", contacto: "", localidade: "", tipo: "Limpeza Doméstica", descricao: "" });
+  const [d, setD] = useState<QuoteData>({ nome: "", contacto: "", email: "", localidade: "", tipo: "Limpeza Doméstica", urgencia: URGENCY_OPTIONS[0], descricao: "" });
   const set = (k: keyof typeof d) => (e: { target: { value: string } }) => setD({ ...d, [k]: e.target.value });
   const submit = (e: FormEvent) => {
     e.preventDefault();
+    saveQuoteToSheet(d, "WhatsApp");
     const url = whatsappLink(buildQuoteMessage(d));
     const win = window.open(url, "_blank");
     if (win) win.opener = null;
@@ -355,6 +368,7 @@ export function QuoteSection() {
   const sendSms = (e: { currentTarget: HTMLButtonElement }) => {
     const form = e.currentTarget.form;
     if (form && !form.reportValidity()) return;
+    saveQuoteToSheet(d, "SMS");
     window.location.href = `sms:${PHONE_TEL.replace("tel:", "")}?body=${encodeURIComponent(buildQuoteMessage(d))}`;
   };
   return (
@@ -383,12 +397,18 @@ export function QuoteSection() {
           <form onSubmit={submit} className="rounded-[2rem] border border-border bg-card p-6 shadow-elegant sm:p-9">
             <div className="grid gap-5 sm:grid-cols-2">
               <label className="grid gap-2 text-sm font-bold text-navy">Nome<input required maxLength={80} value={d.nome} onChange={set("nome")} className={field} placeholder="O seu nome" autoComplete="name" /></label>
-              <label className="grid gap-2 text-sm font-bold text-navy">Contacto<input required maxLength={60} value={d.contacto} onChange={set("contacto")} className={field} placeholder="Telefone ou email" autoComplete="tel" /></label>
+              <label className="grid gap-2 text-sm font-bold text-navy">Telefone<input required type="tel" inputMode="tel" maxLength={30} value={d.contacto} onChange={set("contacto")} className={field} placeholder="O seu número" autoComplete="tel" /></label>
+              <label className="grid gap-2 text-sm font-bold text-navy sm:col-span-2">Email <span className="-mt-1 text-xs font-medium text-muted-foreground">Opcional</span><input type="email" maxLength={100} value={d.email} onChange={set("email")} className={field} placeholder="exemplo@email.com" autoComplete="email" /></label>
               <label className="grid gap-2 text-sm font-bold text-navy">Localidade<input required maxLength={60} value={d.localidade} onChange={set("localidade")} className={field} placeholder="Ex.: Coimbra" /></label>
               <label className="grid gap-2 text-sm font-bold text-navy">Tipo de limpeza
                 <select value={d.tipo} onChange={set("tipo")} className={field}>
                   {SERVICES.map((s) => <option key={s.title}>{s.title}</option>)}
                   <option>Outro</option>
+                </select>
+              </label>
+              <label className="grid gap-2 text-sm font-bold text-navy sm:col-span-2">Nível de urgência
+                <select value={d.urgencia} onChange={set("urgencia")} className={field}>
+                  {URGENCY_OPTIONS.map((u) => <option key={u}>{u}</option>)}
                 </select>
               </label>
               <label className="grid gap-2 text-sm font-bold text-navy sm:col-span-2">Descrição do serviço<textarea rows={4} maxLength={800} value={d.descricao} onChange={set("descricao")} className={field} placeholder="Tipologia, área aproximada, datas preferidas…" /></label>
@@ -398,7 +418,7 @@ export function QuoteSection() {
               <Button type="button" variant="soft" size="xl" className="w-full" onClick={sendSms}><Smartphone /> Enviar por SMS</Button>
             </div>
             <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
-              Ao enviar, abre-se o WhatsApp ou as mensagens do telemóvel com o pedido já escrito. Este website não guarda os seus dados; são usados apenas pela CleanDireto para responder ao seu pedido de orçamento.
+              Ao enviar, abre-se o WhatsApp ou as mensagens do telemóvel com o pedido já escrito. {SHEET_URL ? "Os dados do pedido ficam também registados pela CleanDireto para dar seguimento ao orçamento." : "Este website não guarda os seus dados."} São usados apenas pela CleanDireto para responder ao seu pedido.
             </p>
           </form>
         </Reveal>
@@ -444,7 +464,7 @@ export function Testimonials() {
 const FAQ = [
   { q: "O orçamento é gratuito?", a: "Sim. Pode pedir um orçamento sem compromisso, explicando o serviço de que necessita." },
   { q: "Fazem limpezas pós-obra?", a: "Sim, a limpeza pós-obra é um dos serviços da CleanDireto. Descreva o espaço e o tipo de obra para avaliarmos o seu caso." },
-  { q: "Trabalham fora de Coimbra?", a: "Atuamos em Coimbra e na Região Centro. Se a sua localidade não estiver na lista, contacte-nos para confirmar disponibilidade." },
+  { q: "Trabalham fora de Coimbra?", a: "Atuamos em Coimbra e arredores, incluindo Condeixa-a-Nova e Lousã. Se a sua localidade não estiver indicada, contacte-nos para confirmar disponibilidade." },
   { q: "Fazem limpezas regulares?", a: "Fale connosco sobre a frequência que pretende; avaliamos a possibilidade de acordo com o seu espaço e as suas necessidades." },
   { q: "Como posso pedir um orçamento?", a: "Pelo formulário desta página, por WhatsApp, por telefone ou através da nossa página de Facebook." },
   { q: "Como são combinadas as datas dos serviços?", a: "Depois de aceitar a proposta, a data e os detalhes são combinados diretamente consigo." },
@@ -497,8 +517,10 @@ export function Footer() {
       <Container>
         <div className="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-[1.4fr_1fr_1fr_1.1fr]">
           <div className="col-span-2 lg:col-span-1">
-            <Logo light />
-            <p className="mt-5 max-w-sm text-sm leading-relaxed text-navy-foreground/65 sm:text-base">Limpezas profissionais para casas, empresas e condomínios em Coimbra e na Região Centro.</p>
+            <a href="#top" aria-label="CleanDireto — início" className="inline-block rounded-2xl bg-white p-3 shadow-soft">
+              <img src={logoUrl} alt="CleanDireto Limpezas" width={160} height={113} loading="lazy" className="h-auto w-36" />
+            </a>
+            <p className="mt-5 max-w-sm text-sm leading-relaxed text-navy-foreground/65 sm:text-base">Limpezas profissionais para casas, empresas e condomínios em Coimbra e arredores.</p>
             <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" aria-label="CleanDireto no Facebook"
               className="mt-5 inline-grid size-11 place-items-center rounded-full bg-navy-foreground/10 transition-colors hover:bg-[#1877F2]"><Facebook className="size-5" /></a>
           </div>
@@ -511,8 +533,8 @@ export function Footer() {
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky">Zonas</p>
             <ul className="mt-4 grid gap-1 text-sm text-navy-foreground/75">
-              {ZONES.slice(0, 6).map((z) => <li key={z} className="flex min-h-9 items-center">{z}</li>)}
-              <li className="flex min-h-9 items-center"><a href="#zonas" className="hover:text-navy-foreground">e arredores →</a></li>
+              {ZONES.map((z) => <li key={z} className="flex min-h-9 items-center">{z}</li>)}
+              <li className="flex min-h-9 items-center"><a href="#zonas" className="inline-flex min-h-9 items-center hover:text-navy-foreground">e arredores →</a></li>
             </ul>
           </div>
           <div className="col-span-2 lg:col-span-1">
