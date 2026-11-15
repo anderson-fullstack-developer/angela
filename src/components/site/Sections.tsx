@@ -141,7 +141,7 @@ export function Stats() {
 // Anos indicados pelo Nuno. Se a data de início da atividade mudar, alterar aqui.
 const JOURNEY = [
   { year: "2023", text: "Início da atividade em Coimbra." },
-  { year: "2024", text: "Pós-obra, escritórios e condomínios." },
+  { year: "2024", text: "Expansão na zona de Coimbra." },
   { year: "2025", text: "Clientes regulares na região." },
 ];
 
