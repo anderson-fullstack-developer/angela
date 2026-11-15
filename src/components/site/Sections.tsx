@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from "react";
 import {
   ArrowRight, Building2, CalendarCheck, Camera, Check, ClipboardList, Facebook, HardHat, Home, HeartHandshake,
-  MapPin, MessageCircle, Phone, Play, Quote, Video as VideoIcon, Smartphone, Sofa, Sparkles, Star, Warehouse, Search, Briefcase, Send, ShieldCheck, Award, Crown,
+  MapPin, MessageCircle, Phone, Play, Quote, Video as VideoIcon, Smartphone, Sofa, Sparkles, Star, Warehouse, Search, Briefcase, Send, ShieldCheck, Award, Crown, Clock,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -67,7 +67,7 @@ export function Hero() {
 /* ---------------- TRUST STRIP ---------------- */
 const TRUST = [
   { icon: ShieldCheck, title: "Orçamento gratuito", text: "Sem compromisso" },
-  { icon: MessageCircle, title: "Resposta por WhatsApp", text: "Contacto direto e rápido" },
+  { icon: Clock, title: "Resposta média de 10h", text: "Por WhatsApp ou telefone" }, // indicado pelo cliente (15/11/2026)
   { icon: MapPin, title: "Coimbra e arredores", text: "Vamos até si" },
   { icon: Building2, title: "Particulares e empresas", text: "Casas, escritórios e condomínios" },
 ];
@@ -495,6 +495,7 @@ export function Testimonials() {
 /* ---------------- FAQ ---------------- */
 const FAQ = [
   { q: "O orçamento é gratuito?", a: "Sim. Pode pedir um orçamento sem compromisso, explicando o serviço de que necessita." },
+  { q: "Em quanto tempo respondem?", a: "O tempo médio de resposta é de cerca de 10 horas. Para pedidos urgentes, indique a urgência no formulário ou contacte-nos diretamente por WhatsApp ou telefone." },
   { q: "Fazem limpezas pós-obra?", a: "Sim, a limpeza pós-obra é um dos serviços da CleanDireto. Descreva o espaço e o tipo de obra para avaliarmos o seu caso." },
   { q: "Trabalham fora de Coimbra?", a: "Atuamos em Coimbra e arredores, incluindo Condeixa-a-Nova e Lousã. Se a sua localidade não estiver indicada, contacte-nos para confirmar disponibilidade." },
   { q: "Fazem limpezas regulares?", a: "Fale connosco sobre a frequência que pretende; avaliamos a possibilidade de acordo com o seu espaço e as suas necessidades." },
