@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import {
   ArrowRight, Building2, CalendarCheck, Camera, Check, ClipboardList, Facebook, HardHat, Home, MapPin, MessageCircle, Phone, Play, Quote, Smartphone, Sofa, Sparkles, Star, Warehouse, Briefcase, Send,
 } from "lucide-react";
@@ -75,6 +75,40 @@ const STATS = [
   { value: "6", label: "Tipos de serviço" },
   { value: "10+", label: "Localidades servidas" },
 ];
+// Conta de 0 até ao valor quando o número aparece no ecrã. Sem JavaScript ou com
+// "reduzir movimento" ativo, mostra logo o valor final.
+function CountUp({ value, duration = 1600 }: { value: string; duration?: number }) {
+  const m = value.match(/^(\D*)(\d+)(.*)$/);
+  const target = m ? Number(m[2]) : 0;
+  const [n, setN] = useState(target);
+  const ref = useRef<HTMLSpanElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!m || !el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    setN(0);
+    let raf = 0;
+    const io = new IntersectionObserver(([e]) => {
+      if (!e?.isIntersecting) return;
+      io.disconnect();
+      const t0 = performance.now();
+      const tick = (t: number) => {
+        const p = Math.min((t - t0) / duration, 1);
+        setN(Math.round(target * (1 - Math.pow(1 - p, 3))));
+        if (p < 1) raf = requestAnimationFrame(tick);
+      };
+      raf = requestAnimationFrame(tick);
+    }, { threshold: 0.4 });
+    io.observe(el);
+    return () => { io.disconnect(); cancelAnimationFrame(raf); };
+  }, [value]);
+  if (!m) return <>{value}</>;
+  return (
+    <span ref={ref} aria-label={value}>
+      <span aria-hidden>{m[1]}{n}{m[3]}</span>
+    </span>
+  );
+}
+
 export function Stats() {
   return (
     <section aria-label="Números da CleanDireto" className="border-y border-border bg-card py-10 sm:py-12">
@@ -83,7 +117,7 @@ export function Stats() {
           {STATS.map((st, i) => (
             <Reveal key={st.label} delay={i * 60}>
               <div className={cn("h-full", i > 0 && "lg:border-l lg:border-border lg:pl-6")}>
-                <p className="text-3xl font-extrabold tracking-tight text-navy sm:text-4xl">{st.value}</p>
+                <p className="text-3xl font-extrabold tracking-tight text-navy tabular-nums sm:text-4xl"><CountUp value={st.value} /></p>
                 <p className="mt-1 text-sm text-muted-foreground">{st.label}</p>
               </div>
             </Reveal>
@@ -561,7 +595,7 @@ export function Footer() {
         </div>
         <div className="mt-16 flex flex-col gap-2 border-t border-navy-foreground/10 pt-6 text-sm text-navy-foreground/50 sm:flex-row sm:justify-between">
           <p>© {new Date().getFullYear()} CleanDireto. Todos os direitos reservados.</p>
-          <p>Desenvolvido por <span className="font-semibold text-navy-foreground/80">Anderson Neto</span></p>
+          <p>Desenvolvido por <a href="https://neto-software.com" target="_blank" rel="noopener" className="font-semibold text-navy-foreground/80 hover:text-navy-foreground hover:underline">Anderson Neto · Neto Software</a></p>
         </div>
       </Container>
     </footer>
