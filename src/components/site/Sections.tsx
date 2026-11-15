@@ -640,7 +640,6 @@ export function Footer() {
         </div>
         <div className="mt-10 flex flex-col gap-2 border-t sm:mt-16 border-navy-foreground/10 pt-6 text-sm text-navy-foreground/50 sm:flex-row sm:justify-between">
           <p>© {new Date().getFullYear()} CleanDireto. Todos os direitos reservados.</p>
-          <p>Desenvolvido por <a href="https://neto-software.com" target="_blank" rel="noopener" className="inline-block py-2 font-semibold text-navy-foreground/80 hover:text-navy-foreground hover:underline">Anderson Neto · Neto Software</a></p>
         </div>
       </Container>
     </footer>
