@@ -409,21 +409,13 @@ export function Video() {
 }
 
 /* ---------------- ZONES ---------------- */
-const ZONES = ["Coimbra", "Condeixa-a-Nova", "Lousã"];
 export function Zones() {
   return (
     <section id="zonas" className="bg-muted py-14 sm:py-20 lg:py-28">
       <Container className="grid gap-8 md:grid-cols-[1fr_1.15fr] md:items-center lg:gap-14 [&>*]:min-w-0">
         <div>
-          <SectionHeading center={false} eyebrow="Zonas de atuação" title="Coimbra e arredores." subtitle="Também vamos a outras localidades perto de Coimbra." />
+          <SectionHeading center={false} eyebrow="Zonas de atuação" title="Coimbra e arredores." subtitle="Trabalhamos em Coimbra e nas localidades à volta. Não sabe se chegamos à sua zona? Pergunte-nos." />
           <Reveal delay={100}>
-            <ul className="mt-6 flex flex-wrap gap-2 sm:gap-3">
-              {ZONES.map((z) => (
-                <li key={z} className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2.5 text-sm font-bold text-navy sm:px-5 sm:py-3 sm:text-base">
-                  <MapPin className="size-4 text-bright" /> {z}
-                </li>
-              ))}
-            </ul>
             <div className="mt-6">
               <Button asChild variant="whatsapp" size="lg" className="w-full min-[480px]:w-auto">
                 <a href={whatsappLink("Olá CleanDireto! Gostaria de confirmar se trabalham na minha localidade: ")} target="_blank" rel="noopener noreferrer"><MessageCircle /> Confirmar localidade</a>
@@ -568,7 +560,7 @@ export function Testimonials() {
 export const FAQ = [
   { q: "O orçamento é gratuito?", a: "Sim, e sem compromisso." },
   { q: "Em quanto tempo respondem?", a: "Em média em 10 horas. Se for urgente, indique no formulário ou ligue-nos." },
-  { q: "Trabalham fora de Coimbra?", a: "Sim, em Condeixa-a-Nova, Lousã e arredores. Pergunte-nos pela sua localidade." },
+  { q: "Trabalham fora de Coimbra?", a: "Sim, em Coimbra e arredores. Pergunte-nos pela sua localidade." },
   { q: "Fazem limpezas regulares?", a: "Sim, semanais, quinzenais ou mensais, para casas e empresas." },
   { q: "Como marco a data?", a: "Depois de aceitar o orçamento, combinamos o dia e a hora consigo." },
 ]
@@ -633,8 +625,7 @@ export function Footer() {
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-sky">Zonas</p>
             <ul className="mt-4 grid gap-1 text-sm text-navy-foreground/75">
-              {ZONES.map((z) => <li key={z} className="flex min-h-10 items-center">{z}</li>)}
-              <li className="flex min-h-10 items-center"><a href="#zonas" className="inline-flex min-h-10 items-center hover:text-navy-foreground">e arredores →</a></li>
+              <li><a href="#zonas" className="inline-flex min-h-10 items-center hover:text-navy-foreground">Coimbra e arredores</a></li>
             </ul>
           </div>
           <div>

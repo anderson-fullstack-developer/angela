@@ -26,7 +26,7 @@ const localBusiness = {
   image: `${SITE_URL}/og-cleandireto-v2.jpg`,
   logo: `${SITE_URL}/favicon-512x512.png`,
   telephone: "+351932929914",
-  areaServed: [{ "@type": "City", name: "Coimbra" }, { "@type": "City", name: "Condeixa-a-Nova" }, { "@type": "City", name: "Lousã" }],
+  areaServed: [{ "@type": "City", name: "Coimbra" }, { "@type": "AdministrativeArea", name: "Coimbra e arredores" }],
   address: { "@type": "PostalAddress", addressLocality: "Coimbra", addressRegion: "Coimbra", addressCountry: "PT" },
   sameAs: ["https://www.facebook.com/share/1E9kHucCe5/"],
   knowsAbout: ["Limpeza doméstica", "Limpeza pós-obra", "Remoção de bolores", "Limpeza de escritórios", "Limpeza de condomínios", "Limpeza de sofás e carpetes", "Limpeza de telhados"],
