@@ -553,9 +553,9 @@ export function Testimonials() {
             <figure key={t.text} className="flex w-[85%] max-w-[340px] shrink-0 snap-center flex-col rounded-2xl border border-border bg-card p-5 sm:w-auto sm:max-w-none sm:p-6">
               <Stars />
               <blockquote className="mt-3 flex-1 leading-relaxed text-navy">“{t.text}”</blockquote>
-              <figcaption className="mt-4 text-sm text-muted-foreground">
-                {t.name ? <><span className="font-bold text-navy">{t.name}</span> · {t.place} · </> : null}{t.service}
-              </figcaption>
+              {t.name && (
+                <figcaption className="mt-4 text-sm text-muted-foreground"><span className="font-bold text-navy">{t.name}</span> · {t.place}</figcaption>
+              )}
             </figure>
           ))}
         </div>
