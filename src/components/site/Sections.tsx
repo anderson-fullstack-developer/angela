@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import {
-  ArrowRight, Building2, CalendarCheck, Camera, Check, ClipboardList, Facebook, HardHat, Home, MapPin, MessageCircle, Phone, Play, Quote, Smartphone, Sofa, Sparkles, Star, Warehouse, Briefcase, Send,
+  ArrowRight, Building2, CalendarCheck, Camera, Check, ClipboardList, Facebook, HardHat, Home, MapPin, MessageCircle, Phone, Play, Smartphone, Sofa, Sparkles, Star, Warehouse, Briefcase, Send,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -485,33 +485,53 @@ export function QuoteSection() {
 }
 
 /* ---------------- TESTIMONIALS ---------------- */
-type Testimonial = { name: string; place: string; text: string };
-// Adicionar apenas avaliações verdadeiras, com autorização dos clientes.
+type Testimonial = { name: string; place: string; service: string; text: string };
+// Público: só opiniões verdadeiras de clientes (nome ou iniciais + localidade), com autorização.
 const TESTIMONIALS: Testimonial[] = [];
+// Textos provisórios enviados pelo Nuno ("Comentários para apresentação provisória").
+// Só aparecem com ?apresentacao no endereço, marcados como exemplo. Nunca no site público.
+const PREVIEW_TESTIMONIALS: Testimonial[] = [
+  { name: "", place: "", service: "Limpeza doméstica", text: "Fiquei muito satisfeita com a limpeza! A casa ficou impecável, tudo muito bem cuidado e com atenção aos pequenos detalhes. Recomendo!" },
+  { name: "", place: "", service: "Limpeza pós-obra", text: "Contratei o serviço para uma limpeza pós-obra e gostei bastante do resultado. O espaço ficou muito bem apresentado e pronto a utilizar." },
+  { name: "", place: "", service: "Atendimento", text: "Gostei muito da comunicação e do cuidado com o serviço. Foram atenciosos e esclareceram todas as minhas dúvidas." },
+  { name: "", place: "", service: "Limpeza de bolores", text: "Tínhamos problemas com bolores numa divisão e ficámos muito satisfeitos com o cuidado demonstrado durante a limpeza." },
+  { name: "", place: "", service: "Experiência geral", text: "Uma experiência muito positiva! Atendimento próximo, trabalho organizado e um resultado que correspondeu às expectativas." },
+];
+
+function Stars() {
+  return (
+    <span className="flex gap-0.5 text-amber-400" aria-label="5 em 5 estrelas">
+      {[0, 1, 2, 3, 4].map((i) => <Star key={i} className="size-4 fill-current" aria-hidden />)}
+    </span>
+  );
+}
+
 export function Testimonials() {
-  // Só aparecem avaliações verdadeiras; enquanto a lista estiver vazia, a secção fica escondida.
-  if (!TESTIMONIALS.length) return null;
+  const [preview, setPreview] = useState(false);
+  useEffect(() => { setPreview(new URLSearchParams(window.location.search).has("apresentacao")); }, []);
+  const list = TESTIMONIALS.length ? TESTIMONIALS : preview ? PREVIEW_TESTIMONIALS : [];
+  if (!list.length) return null;
+  const isPreview = !TESTIMONIALS.length;
   return (
     <section id="testemunhos" className="py-14 sm:py-20 lg:py-28">
       <Container>
-        <SectionHeading eyebrow="Testemunhos" title="A opinião de quem nos conhece." />
-        {TESTIMONIALS.length ? (
-          <div className="mt-14 grid gap-5 md:grid-cols-3">
-            {TESTIMONIALS.map((t) => (
-              <Reveal key={t.name}><figure className="h-full rounded-3xl border border-border bg-card p-7 shadow-soft">
-                <Quote className="size-7 text-bright" /><blockquote className="mt-4 leading-relaxed text-navy">{t.text}</blockquote>
-                <figcaption className="mt-5 text-sm font-bold text-navy">{t.name} <span className="font-medium text-muted-foreground">· {t.place}</span></figcaption>
-              </figure></Reveal>
-            ))}
-          </div>
-        ) : (
-          <Reveal className="mx-auto mt-12 max-w-2xl rounded-3xl border border-border bg-card p-10 text-center shadow-soft">
-            <Star className="mx-auto size-8 text-bright" />
-            <p className="mt-4 text-lg font-extrabold text-navy">As primeiras avaliações chegam em breve.</p>
-            <p className="mt-2 text-muted-foreground">Já trabalhou connosco? Partilhe a sua experiência na nossa página de Facebook.</p>
-            <Button asChild variant="soft" size="lg" className="mt-6"><a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer"><Facebook /> Visitar Facebook</a></Button>
-          </Reveal>
+        <SectionHeading eyebrow="Testemunhos" title="O que dizem os clientes" />
+        {isPreview && (
+          <p className="mx-auto mt-5 w-fit rounded-full border border-dashed border-amber-400 bg-amber-50 px-4 py-1.5 text-center text-xs font-bold text-amber-800">
+            Pré-visualização · textos provisórios, a substituir por opiniões reais
+          </p>
         )}
+        <div className="-mx-5 mt-8 flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-2 [scrollbar-width:none] sm:mx-0 sm:mt-12 sm:grid sm:grid-cols-2 sm:gap-4 sm:overflow-visible sm:px-0 lg:grid-cols-3 [&::-webkit-scrollbar]:hidden">
+          {list.map((t) => (
+            <figure key={t.text} className="flex w-[85%] max-w-[340px] shrink-0 snap-center flex-col rounded-2xl border border-border bg-card p-5 sm:w-auto sm:max-w-none sm:p-6">
+              <Stars />
+              <blockquote className="mt-3 flex-1 leading-relaxed text-navy">“{t.text}”</blockquote>
+              <figcaption className="mt-4 text-sm text-muted-foreground">
+                {t.name ? <><span className="font-bold text-navy">{t.name}</span> · {t.place} · </> : null}{t.service}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
       </Container>
     </section>
   );

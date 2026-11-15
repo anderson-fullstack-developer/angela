@@ -74,8 +74,8 @@ function Index() {
         <About />
         <Process />
         <Zones />
-        <QuoteSection />
         <Testimonials />
+        <QuoteSection />
         <Faq />
         <FinalCta />
       </main>
