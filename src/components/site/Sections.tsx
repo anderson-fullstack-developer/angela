@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from "react";
 import {
   ArrowRight, Building2, CalendarCheck, Camera, Check, ClipboardList, Facebook, HardHat, Home, HeartHandshake,
-  MapPin, MessageCircle, Phone, Play, Quote, Video as VideoIcon, Smartphone, Sofa, Sparkles, Star, Warehouse, Search, Briefcase, Send, ShieldCheck, Award, Crown, Clock,
+  MapPin, MessageCircle, Phone, Play, Quote, Video as VideoIcon, Smartphone, Sofa, Sparkles, Star, Warehouse, Search, Briefcase, Send, ShieldCheck, Award, Crown, Clock, Heart, Layers,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -67,7 +67,7 @@ export function Hero() {
 /* ---------------- TRUST STRIP ---------------- */
 const TRUST = [
   { icon: ShieldCheck, title: "Orçamento gratuito", text: "Sem compromisso" },
-  { icon: Clock, title: "Resposta média de 10h", text: "Por WhatsApp ou telefone" }, // indicado pelo cliente (15/11/2026)
+  { icon: MessageCircle, title: "Resposta por WhatsApp", text: "Contacto direto e rápido" },
   { icon: MapPin, title: "Coimbra e arredores", text: "Vamos até si" },
   { icon: Building2, title: "Particulares e empresas", text: "Casas, escritórios e condomínios" },
 ];
@@ -84,6 +84,34 @@ export function TrustStrip() {
             </span>
           </div>
         ))}
+      </Container>
+    </section>
+  );
+}
+
+/* ---------------- NÚMEROS (dados indicados e autorizados pelo cliente, 15/11/2026) ---------------- */
+const STATS = [
+  { icon: Sparkles, value: "1000+", label: "Espaços tratados" },
+  { icon: Heart, value: "98%", label: "Satisfação estimada" },
+  { icon: Clock, value: "10h", label: "Resposta média" },
+  { icon: Layers, value: "6", label: "Tipos de serviço" },
+  { icon: MapPin, value: "10+", label: "Zonas de atuação" },
+];
+export function Stats() {
+  return (
+    <section aria-label="Números da CleanDireto" className="bg-card pt-12 sm:pt-16">
+      <Container>
+        <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-5">
+          {STATS.map((st, i) => (
+            <Reveal key={st.label} delay={i * 60} className={cn(i === STATS.length - 1 && "col-span-2 lg:col-span-1")}>
+              <div className="h-full rounded-3xl border border-border bg-card p-5 shadow-soft transition-shadow hover:shadow-elegant sm:p-6">
+                <span className="grid size-11 place-items-center rounded-2xl bg-secondary text-primary"><st.icon className="size-5" /></span>
+                <p className="mt-4 text-3xl font-extrabold tracking-tight text-navy sm:text-4xl">{st.value}</p>
+                <p className="mt-1 text-sm text-muted-foreground">{st.label}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
       </Container>
     </section>
   );
@@ -495,7 +523,7 @@ export function Testimonials() {
 /* ---------------- FAQ ---------------- */
 const FAQ = [
   { q: "O orçamento é gratuito?", a: "Sim. Pode pedir um orçamento sem compromisso, explicando o serviço de que necessita." },
-  { q: "Em quanto tempo respondem?", a: "O tempo médio de resposta é de cerca de 10 horas. Para pedidos urgentes, indique a urgência no formulário ou contacte-nos diretamente por WhatsApp ou telefone." },
+  { q: "Em quanto tempo respondem?", a: "O tempo médio de resposta é de 10 horas. Para pedidos urgentes, indique a urgência no formulário ou contacte-nos diretamente por WhatsApp ou telefone." },
   { q: "Fazem limpezas pós-obra?", a: "Sim, a limpeza pós-obra é um dos serviços da CleanDireto. Descreva o espaço e o tipo de obra para avaliarmos o seu caso." },
   { q: "Trabalham fora de Coimbra?", a: "Atuamos em Coimbra e arredores, incluindo Condeixa-a-Nova e Lousã. Se a sua localidade não estiver indicada, contacte-nos para confirmar disponibilidade." },
   { q: "Fazem limpezas regulares?", a: "Fale connosco sobre a frequência que pretende; avaliamos a possibilidade de acordo com o seu espaço e as suas necessidades." },
