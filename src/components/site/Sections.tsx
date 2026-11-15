@@ -146,7 +146,7 @@ const JOURNEY = [
 ];
 
 /* ---------------- SERVICES ---------------- */
-const SERVICES = [
+export const SERVICES = [
   { icon: Home, title: "Limpeza Doméstica", text: "Regular ou pontual, incluindo bolores." },
   { icon: HardHat, title: "Limpeza Pós-Obra", text: "Pó, tinta e cimento. Casa pronta a habitar." },
   { icon: Briefcase, title: "Escritórios e Empresas", text: "Em horários combinados consigo." },
@@ -382,7 +382,7 @@ export function Process() {
 
 /* ---------------- VIDEO ---------------- */
 // Vídeo real enviado pelo cliente (Boloresfinal.mov), convertido para H.264 + AAC 1080x1920 com som. Só carrega ao carregar em Play.
-const VIDEO = { src: "/videos/limpeza-bolores-som.mp4", poster: "/videos/limpeza-bolores-som-poster.jpg", title: "Limpeza de bolores" };
+export const VIDEO = { src: "/videos/limpeza-bolores-som.mp4", poster: "/videos/limpeza-bolores-som-poster.jpg", title: "Limpeza de bolores" };
 export function Video() {
   return (
     <section id="video" className="py-14 sm:py-20 lg:py-28">
@@ -565,7 +565,7 @@ export function Testimonials() {
 }
 
 /* ---------------- FAQ ---------------- */
-const FAQ = [
+export const FAQ = [
   { q: "O orçamento é gratuito?", a: "Sim, e sem compromisso." },
   { q: "Em quanto tempo respondem?", a: "Em média em 10 horas. Se for urgente, indique no formulário ou ligue-nos." },
   { q: "Trabalham fora de Coimbra?", a: "Sim, em Condeixa-a-Nova, Lousã e arredores. Pergunte-nos pela sua localidade." },
