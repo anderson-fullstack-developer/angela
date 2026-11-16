@@ -14,6 +14,11 @@ import wcCantoAntes from "@/assets/trabalhos/casa-de-banho-canto-antes.webp";
 import wcCantoDepois from "@/assets/trabalhos/casa-de-banho-canto-depois.webp";
 import wcParedeAntes from "@/assets/trabalhos/casa-de-banho-parede-antes.webp";
 import wcParedeDepois from "@/assets/trabalhos/casa-de-banho-parede-depois.webp";
+import cozinhaAntes from "@/assets/trabalhos/cozinha-antes.webp";
+import cozinhaDepois from "@/assets/trabalhos/cozinha-depois.webp";
+import salaAntes from "@/assets/trabalhos/sala-antes.webp";
+import salaDepois from "@/assets/trabalhos/sala-depois.webp";
+import bancada from "@/assets/trabalhos/bancada.webp";
 import {
   DEFAULT_WA_MESSAGE, FACEBOOK_URL, PHONE_DISPLAY, PHONE_TEL, SHEET_URL, URGENCY_OPTIONS, buildQuoteMessage, saveQuoteToSheet, whatsappLink, type QuoteData,
 } from "@/lib/contact";
@@ -187,7 +192,7 @@ export function Services() {
 }
 
 /* ---------------- BEFORE / AFTER ---------------- */
-type Comparison = { before: string; after: string; label: string };
+type Comparison = { before?: string; after: string; label: string };
 // Adicionar apenas fotografias reais de trabalhos da CleanDireto, com autorização.
 // Fotografias tiradas do vídeo enviado pelo Nuno (trabalho real de remoção de bolores).
 const GALLERY: Record<string, Comparison[]> = {
@@ -196,12 +201,27 @@ const GALLERY: Record<string, Comparison[]> = {
     { before: wcCantoAntes, after: wcCantoDepois, label: "Canto de casa de banho" },
     { before: wcParedeAntes, after: wcParedeDepois, label: "Parede de casa de banho" },
   ],
+  // Fotografias enviadas pelo Nuno a 16/11/2026 (espaço desocupado: cozinha exterior e sala).
+  "Limpeza de espaços": [
+    { before: cozinhaAntes, after: cozinhaDepois, label: "Cozinha e zona exterior" },
+    { before: salaAntes, after: salaDepois, label: "Sala desocupada" },
+    { after: bancada, label: "Bancada e lava-loiça" },
+  ],
   "Domésticas": [], "Pós-obra": [], "Sofás e carpetes": [], "Escritórios": [], "Condomínios": [],
 };
 
 // Comparador antes/depois.
 // Telemóvel: deslizar na foto passa para a seguinte (carrossel); arrastar a pega redonda compara; tocar move a linha.
 // Rato: arrastar em qualquer ponto da foto. Teclado: setas no controlo (input range escondido).
+function Photo({ c }: { c: Comparison }) {
+  return (
+    <figure>
+      <img src={c.after} alt={c.label} width={720} height={960} loading="lazy" className="aspect-[3/4] w-full rounded-2xl bg-muted object-cover" />
+      <figcaption className="mt-3 text-sm font-semibold text-navy">{c.label}</figcaption>
+    </figure>
+  );
+}
+
 function BeforeAfter({ c }: { c: Comparison }) {
   const [pos, setPos] = useState(50);
   const box = useRef<HTMLDivElement>(null);
@@ -281,7 +301,7 @@ function GalleryContent() {
         </Reveal>}
         <Reveal className="mx-auto mt-8 max-w-5xl sm:mt-10">
           {items.length ? (
-            <div className="-mx-5 flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-2 [scrollbar-width:none] sm:mx-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:overflow-visible sm:px-0 lg:gap-6 [&::-webkit-scrollbar]:hidden">{items.map((c) => <div key={c.label} className="w-[78%] max-w-[300px] shrink-0 snap-center sm:w-auto sm:max-w-none"><BeforeAfter c={c} /></div>)}</div>
+            <div className="-mx-5 flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-2 [scrollbar-width:none] sm:mx-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:overflow-visible sm:px-0 lg:gap-6 [&::-webkit-scrollbar]:hidden">{items.map((c) => <div key={c.label} className="w-[78%] max-w-[300px] shrink-0 snap-center sm:w-auto sm:max-w-none">{c.before ? <BeforeAfter c={c} /> : <Photo c={c} />}</div>)}</div>
           ) : (
             <div className="grid aspect-[16/9] place-items-center rounded-3xl border-2 border-dashed border-primary/25 bg-card p-8 text-center">
               <div>
