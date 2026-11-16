@@ -19,6 +19,7 @@ import cozinhaDepois from "@/assets/trabalhos/cozinha-depois.webp";
 import salaAntes from "@/assets/trabalhos/sala-antes.webp";
 import salaDepois from "@/assets/trabalhos/sala-depois.webp";
 import bancada from "@/assets/trabalhos/bancada.webp";
+import bancadaAntes from "@/assets/trabalhos/bancada-antes.webp";
 import {
   DEFAULT_WA_MESSAGE, FACEBOOK_URL, PHONE_DISPLAY, PHONE_TEL, SHEET_URL, URGENCY_OPTIONS, buildQuoteMessage, saveQuoteToSheet, whatsappLink, type QuoteData,
 } from "@/lib/contact";
@@ -205,7 +206,7 @@ const GALLERY: Record<string, Comparison[]> = {
   "Limpeza de espaços": [
     { before: cozinhaAntes, after: cozinhaDepois, label: "Cozinha e zona exterior" },
     { before: salaAntes, after: salaDepois, label: "Sala desocupada" },
-    { after: bancada, label: "Bancada e lava-loiça" },
+    { before: bancadaAntes, after: bancada, label: "Bancada e lava-loiça" },
   ],
   "Domésticas": [], "Pós-obra": [], "Sofás e carpetes": [], "Escritórios": [], "Condomínios": [],
 };
