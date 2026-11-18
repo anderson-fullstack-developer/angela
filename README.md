@@ -21,3 +21,5 @@ pnpm start
 ```
 
 The quote form prepares a WhatsApp message; this website does not store or submit customer details to a server.
+
+The social sharing preview is defined by `public/og-image.png`; browser and Apple icons use the Angela Nettoyage logo.
